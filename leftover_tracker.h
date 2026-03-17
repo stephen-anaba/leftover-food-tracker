@@ -12,8 +12,10 @@
 
 class LeftoverTracker {
 private:
-  // container for leftover records created by user. This will be used to construct leftover report
+  // container for leftover records created by user to be used to construct leftover report
   std::vector<LeftoverRecord> record_list_;
+  // instance of LeftoverReport class
+  LeftoverReport leftover_report_;
 public:
   // default constructor
   LeftoverTracker() = default;
@@ -89,12 +91,16 @@ public:
   }
 
   // Precondition: User has created leftover record(s)
-  // Postcondition: Retreive record(s) from memory
-  LeftoverRecord GetAllRecord() {}
+  // Postcondition: Provides external classes or functions the means to access list of leftover record from memory
+  std::vector<LeftoverRecord> GetAllRecord() const {
+    return record_list_;
+  }
 
   // Precondition: User has created leftover record(s)
   // Postcondition: Generates and returns the leftover report
-  LeftoverReport GenerateReport() {}
+  LeftoverReport GenerateReport() const {
+    // iterate leftover_report_.GetMostCommonLeftovers(), leftover_report_.GetMostLeftoverProducingMeals(), leftover_report_.GetTotalCostOfLeftovers(), leftover_report_.GetMostCommonReasonsForLeftovers(), leftover_report_.GetCommonDisposalMechanism(), leftover_report_.GetSuggestedStrategiesToReduceLeftovers()
+  }
 
   // ======================= YOUR CODE HERE =======================
   // Write the LeftoverTracker class here. Refer to your class design for the
