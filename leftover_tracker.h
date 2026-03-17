@@ -1,14 +1,101 @@
 #ifndef LEFTOVER_TRACKER_H_
 #define LEFTOVER_TRACKER_H_
 
-// Please fill in below.
-// <Your name>
-// <Your section number> (e.g. CPSC 121L-01)
-// <Date>
-// <Your csu.fullerton.edu email>
-// <Your GitHub username>
+// Stephen Anaba
+// CPSC 121L-01
+// 3/16/2026
+// stevoclock@csu.fullerton.edu
+// 3takita
+
+#include <algorithm> // for std::find()
+#include <vector> // for dynamic container
 
 class LeftoverTracker {
+private:
+  // container for leftover records created by user. This will be used to construct leftover report
+  std::vector<LeftoverRecord> record_list_;
+public:
+  // default constructor
+  LeftoverTracker() = default;
+  
+  // Precondition: User has made a record
+  // Postcondition: Adds a record to record_list_, returns true if add is successful, else returns false. No duplicate records 
+  bool AddRecord() {
+    // variables
+    std::string date = "";
+    std::string meal = "";
+    std::string food_name = "";
+    double quantity_in_ounce = 0.0;
+    std::string leftover_reason = "";
+    std::string disposal_mechanism = "";
+    double cost = 0.0;
+    // get user input
+    std::cout << "Enter date: ";
+    std::cin >> date;
+    std::cout << "Enter meal: ";
+    std::cin >> meal;
+    std::cout << "Enter food name: ";
+    std::cin >> food_name;
+    std::cout << "Enter quantity (in ounce): ";
+    std::cin >> quantity_in_ounce;
+    std::cout << "Enter leftover reason: ";
+    std::cin >> leftover_reason;
+    std::cout << "Enter disposal mechanism: ";
+    std::cin >> disposal_mechanism;
+    std::cout << "Enter cost: ";
+    std::cin >> cost;
+    // create an instance of LeftoverRecord
+    LeftoverRecord leftover_record{date, meal, food_name, quantity_in_ounce, leftover_reason, disposal_mechanism, cost};
+    // if record_list doesn't contain leftover_record, add it & 
+    // return true. Else return false
+    bool not_found = false;
+    if(ContainsRecord(leftover_record) == -1) {  
+      record_list_.push_back(leftover_record);
+      not_found = true;
+    }
+    return not_found; 
+  } // end of AddRecord()
+
+  // Precondition: Search target must be of type LeftoverRecord
+  // Postcondition: Returns matching index if record_list_ contains a target record. Else, -1 is returned
+  int ContainsRecord(const LeftoverRecord& target) {
+    for(int i = 0; i < record_list_.size(); i++) {
+      if(
+          record_list_[i].GetDate() == target.GetDate() &&
+          record_list_[i].GetMeal() == target.GetMeal() &&
+          record_list_[i].GetName() == target.GetName() &&
+          record_list_[i].GetQuantity() == target.GetQuantity() &&
+          record_list_[i].GetReason() == target.GetReason() &&
+          record_list_[i].GetDisposalMechanism() == target.GetDisposalMechanism() &&
+          record_list_[i].GetCost() == target.GetCost()
+          ) {
+        return i;
+      }
+    }
+    return -1;
+  } // end of ContainsRecord(target)
+  
+  // Precondition: User has created leftover record(s)
+  // Postcondition: Delete a record from record_list_. Return true if delete is successful, false if record not founde
+  bool DeleteRecord(const LeftoverRecord& record) {
+    int found_index = ContainsRecord(record);
+    if(found_index == -1) {
+      return false;
+    } // if found, erase record at matching index
+    if(record_list_.size() >= found_index) {
+      record_list.erase(record_list_.begin() + found_index); 
+    }
+    return true;
+  }
+
+  // Precondition: User has created leftover record(s)
+  // Postcondition: Retreive record(s) from memory
+  LeftoverRecord GetAllRecord() {}
+
+  // Precondition: User has created leftover record(s)
+  // Postcondition: Generates and returns the leftover report
+  LeftoverReport GenerateReport() {}
+
   // ======================= YOUR CODE HERE =======================
   // Write the LeftoverTracker class here. Refer to your class design for the
   // member variables, constructors, and member functions needed.
