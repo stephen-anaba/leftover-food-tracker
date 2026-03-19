@@ -213,12 +213,13 @@ crow::json::wvalue LeftoverReportToCrowJSON(const LeftoverReport& report) {
   // the most common leftovers as a vector of strings. Store the result in
   // the vector declared above.
   most_common_leftovers = report.GetMostCommonLeftoverNames();
-  report_json[kWebReportDataCommonLeftOver] = most_common_leftovers;
+  report_json[kWebReportDataCommonLeftOver] = most_common_leftovers; // DONE
 
   std::vector<std::string> most_common_leftover_reasons{};
   // TODO: Call the member function of LeftoverReport class that returns all
   // the most commonwastage reasons as a vector of strings. Store the result in
   // the vector declared above.
+  most_common_leftover_reasons = report.GetMostCommonLeftoverReasons(); // DONE
   report_json[kWebReportDataCommonLeftOverReason] =
       most_common_leftover_reasons;
 
@@ -226,6 +227,7 @@ crow::json::wvalue LeftoverReportToCrowJSON(const LeftoverReport& report) {
   // TODO: Call the member function of LeftoverReport class that returns all
   // the most costly waste producing meals as a vector of strings. Store the
   // result in the vector declared above.
+  most_costly_leftover_producing_meals = report.Get
   report_json[kWebReportDataMostLeftOverProducingMeal] =
       most_costly_leftover_producing_meals;
 

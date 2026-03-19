@@ -16,7 +16,7 @@ private:
   std::vector<LeftoverRecord> record_list_;
   // computed values to be used to prepare leftover report
   std::vector<std::string> most_common_leftover_names_;
-  std::vector<std::string> most_leftover_producing_meals_;
+  std::vector<std::string> most_costly_leftover_producing_meals_;
   double total_cost_of_leftovers_;
   std::vector<std::string> most_common_leftover_reasons_;
   std::vector<std::string> most_common_disposal_mechanisms_;
@@ -36,9 +36,9 @@ public:
   }
   
   // Precondition: User has created a leftover record
-  // Postcondition: Returns most common leftover producing meals
-  std::vector<std::string> GetMostLeftoverProducingMeals() const {
-    return most_common_leftover_producing_meals_;
+  // Postcondition: Returns the most costly leftover producing meals
+  std::vector<std::string> GetMostCostlyLeftoverProducingMeals() const {
+    return most_costly_leftover_producing_meals_;
   }
   
   // Precondition: User has created a leftover record
