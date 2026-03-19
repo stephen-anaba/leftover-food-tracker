@@ -45,17 +45,7 @@ public:
   double GetQuantity() const { quantity_ = quantity; }
   std::string GetReason() const { reason_ = reason; }
   std::string GetDisposalMechanism() const { disposal_mechanism_ = disposal_mechanism; }
-  double GetCost() const { cost_ = cost; }
-
-  // ======================= YOUR CODE HERE =======================
-  // Write the LeftoverRecord class here. Refer to your class design for the
-  // member variables, constructors, and member functions needed.
-  //
-  // Note: mark functions that do not modify the member variables
-  // as const, by writing `const` after the parameter list.
-  // Pass objects by const reference when appropriate.
-  // Remember that std::string is an object!
-  // ===============================================================
+  double GetCost() const { cost_ = cost; } 
 };
 
 #endif
