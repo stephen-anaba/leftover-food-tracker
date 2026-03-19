@@ -293,14 +293,16 @@ LeftoverRecord QueryStringToLeftoverRecord(
   return record;
 }
 
-bool LeftoverTrackerBackend::LoadRecordsFromJSONFile() {
+bool LeftoverTrackerBackend::LoadRecordsFromJSONFile() { 
   std::ifstream records_file{kLeftoverRecordsFilepath};
+  
   if (!records_file.is_open()) {
     std::filesystem::remove(kLeftoverRecordsFilepath);
     return false;
   }
-
+  
   std::stringstream buffer;
+  
   buffer << records_file.rdbuf();
 
   std::string s = buffer.str();
@@ -318,12 +320,13 @@ bool LeftoverTrackerBackend::LoadRecordsFromJSONFile() {
     std::filesystem::remove(kLeftoverRecordsFilepath);
     return false;
   }
-
+  // iterate through the document
   for (rapidjson::Value::ConstValueIterator itr = doc.Begin(); itr != doc.End();
        ++itr) {
     LeftoverRecord record = DeserializeLeftoverRecordFromJSON(*itr);
     // TODO: Call the member function in the LeftoverTracker class to add a
     // `record`
+    leftover_tracker_.AddRecord(record); //  DONE.  AddRecord() accepts `record` as an argument.
   }
 
   records_file.close();
@@ -344,6 +347,7 @@ bool LeftoverTrackerBackend::WriteRecordsToJSONFile() const {
   // the LeftoverRecord objects. Store the returned records in the vector
   // declared above. Also change the data type of the records vector to `const
   // std::vector<LettoverRecord>&`.
+  records = leftover_tracker_.GetRecords(); // NOT SURE
 
   for (LeftoverRecord record : records) {
     SerializeLeftoverRecordToJSON(record, &writer);

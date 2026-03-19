@@ -33,7 +33,7 @@ class LeftoverTrackerBackend {
   // successfully, else returns false.
   bool WriteRecordsToJSONFile() const;
 
-  // Add the given leftovere record (in the query_string) to the memory.
+  // Add the given leftover record (in the query_string) to the memory.
   crow::json::wvalue AddRecord(const crow::query_string& query_string);
 
   // Delete the given leftover record (in the query_string) from the memory.
@@ -51,7 +51,7 @@ class LeftoverTrackerBackend {
   // stick to Google's style guide when naming your variable.
   LeftoverTracker leftover_tracker_;
   // File path of the file that stores all the leftover records in JSON
-  // format.
+  // format. LoadRecordsFromJSONFile()
   const std::string& kLeftoverRecordsFilepath;
 
   // LeftoverTrackerBackend constants

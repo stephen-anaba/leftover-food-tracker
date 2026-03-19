@@ -22,9 +22,9 @@ public:
   
   // Precondition: User has made a record
   // Postcondition: Adds a record to record_list_, returns true if add is successful, else returns false. No duplicate records 
-  bool AddRecord() {
+  bool AddRecord(const LeftoverRecord& leftover_record) {
     // variables for user input
-    std::string date = "";
+    /*std::string date = "";
     std::string meal = "";
     std::string food_name = "";
     double quantity_in_ounce = 0.0;
@@ -45,9 +45,10 @@ public:
     std::cout << "Enter disposal mechanism: ";
     std::cin >> disposal_mechanism;
     std::cout << "Enter cost: ";
-    std::cin >> cost;
+    std::cin >> cost; 
     // create an instance of LeftoverRecord class
-    LeftoverRecord leftover_record{date, meal, food_name, quantity_in_ounce, leftover_reason, disposal_mechanism, cost};
+    LeftoverRecord leftover_record{date, meal, food_name, quantity_in_ounce, leftover_reason, disposal_mechanism, cost}; */
+    
     // if leftover_record is not in record_list, add it & 
     // return true. Else return false
     if(ContainsRecord(leftover_record) == -1) {  
