@@ -227,7 +227,7 @@ crow::json::wvalue LeftoverReportToCrowJSON(const LeftoverReport& report) {
   // TODO: Call the member function of LeftoverReport class that returns all
   // the most costly waste producing meals as a vector of strings. Store the
   // result in the vector declared above.
-  most_costly_leftover_producing_meals = report.Get
+  most_costly_leftover_producing_meals = report.GetMostCostlyLeftoverProducingMeals(); // DONE
   report_json[kWebReportDataMostLeftOverProducingMeal] =
       most_costly_leftover_producing_meals;
 
@@ -235,6 +235,7 @@ crow::json::wvalue LeftoverReportToCrowJSON(const LeftoverReport& report) {
   // TODO: Call the member function of LeftoverReport class that returns all
   // the suggested strategies as a vector of strings. Store the result in the
   // vector declared above.
+  suggested_strategies_to_reduce_leftover = report.GetSuggestedStrategiesToReduceLeftovers(); // DONE
   report_json[kWebReportDataSuggestedReductLeftover] =
       suggested_strategies_to_reduce_leftover;
 
@@ -242,6 +243,7 @@ crow::json::wvalue LeftoverReportToCrowJSON(const LeftoverReport& report) {
   // TODO: Call the member function of LeftoverReport class that returns the
   // total cost of leftovers as a double. Store the result in the double
   // declared.
+  total_cost_of_leftover = report.GetTotalCostOfLeftovers(); // DONE
   report_json[kWebReportDataLeftOverCost] = total_cost_of_leftover;
 
   return report_json;
