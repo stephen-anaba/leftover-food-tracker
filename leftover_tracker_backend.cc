@@ -258,30 +258,37 @@ LeftoverRecord QueryStringToLeftoverRecord(
   // TODO 1. Get the date from the query_string using
   // query_string.get(kWebDataDate), and set it in the `record` object using the
   // setter in LeftoverRecord class.
+  record.SetDate(query_string.get(kWebDataDate)); // DONE
 
   // TODO 2. Get the meal from the query_string using
   // query_string.get(kWebDataMeal), and set it in the `record` object using the
   // setter in LeftoverRecord class.
+  record.SetDate(query_string.get(kWebDataMeal)); // DONE
 
   // TODO 3. Get the food name from the query_string using
   // query_string.get(kWebDataFoodName), and set it in the `record` object using
   // the setter in LeftoverRecord class.
+  record.SetName(query_string.get(kWebDataFoodName)); // DONE
 
   // TODO 4. Get the quantity from the query_string using
   // std::stod(query_string.get(kWebDataQtyInOz)), and set it in the `record`
   // object using the setter in LeftoverRecord class.
+  record.SetQuantity(query_string.get(kWebDataQtyInOz)); // DONE
 
   // TODO 5. Get the leftover reason from the query_string using
   // query_string.get(kWebDataLeftoverReason), and set it in the `record` object
   // using the setter in LeftoverRecord class.
+  record.SetReason(query_string.get(kWebDataLeftoverReason)); // DONE
 
   // TODO 6. Get the disposal mechanism from the query_string using
   // query_string.get(kWebDataDisposalMechanism), and set it in the `record`
   // object using the setter in LeftoverRecord class.
+  record.SetDisposalMechanism(query_string.get(kWebDataDisposalMechanism)); // DONE
 
   // TODO 7. Get the cost from the query_string using
   // std::stod(query_string.get(kWebDataCost)), and set it in the `record`
   // object using the setter in LeftoverRecord class.
+  record.SetCost(std::stod(query_string.get(kWebDataCost))); // DONE
 
   return record;
 }
