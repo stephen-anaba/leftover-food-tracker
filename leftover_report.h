@@ -26,46 +26,60 @@ public:
   // default constructor. This class gets records by calling the GetRecords() func of LeftoverTracker class
   LeftoverReport() : record_list_{}, most_common_leftover_names_{}, most_costly_leftover_producing_meals_{}, total_cost_of_leftovers_{}, most_common_leftover_reasons_{}, most_common_disposal_mechanisms_{}, suggested_strategies_to_reduce_leftovers_{} {
     // variable & std::unodered_map container declarations
-    double max_meal_cost = 0.0; 
-    int top_meal = 0;
+    double meal_cost_max = 0.0;
+    int meal_name_max = 0;
+    int reason_max = 0;
+    int disposal_max = 0;
     std::unordered_map<std::string, int> counter_map;
     
     // extract from record_list_ components for object variables
     for(const LeftoverRecord& record : record_list_) {
       // 1. compute the frequency of each leftover name. // DONE
       Counter(counter_map, record.GetName());
-      if(counter_map[record.GetName()] > top_meal) {
-        top_meal = counter_map[record.GetName()];
+      if(counter_map[record.GetName()] > meal_name_max) {
+        meal_name_max = counter_map[record.GetName()];
       }
       // 2. compute the cumulative cost of each meal. // DONE
       counter_map[record.GetMeal()] += record.GetCost(); 
-      if(counter_map[record.GetMeal()] > max_meal_cost) {
-        max_meal_cost = counter_map[record.GetMeal()];
+      if(counter_map[record.GetMeal()] > meal_cost_max) {
+        meal_cost_max = counter_map[record.GetMeal()];
       } 
       // 3. add up cost to total_cost_of_leftovers. // DONE
       total_cost_of_leftovers_ += record.GetCost(); 
-      // 4. TODO: compute frequency of each reason in record_list_
+      // 4. compute frequency of each reason in record_list_ // DONE
       Counter(counter_map, record.GetReason());
-      // 5. TODO: compute frequency of each diposal mechanism
+      if(counter_map[record.GetReason()] > reason_max) {
+        reason_max = counter_map[record.GetReason()];
+      }
+      // 5. compute frequency of each diposal mechanism // DONE
       Counter(counter_map, record.GetDisposalMechanism());
-    } // end of for-loop
+      if(counter_map[record.GetDisposalMechanism()] > disposal_max) {
+        disposal_max = counter_map[record.GetDisposalMechanism()];
+      }
+    } // end of 1st for-loop
   
-    // Use inverse lookup to put values in their containers 
+    // • Use inverse lookup to put values in their containers 
     for(const auto& [key, value] : counter_map) {
       // put costly meal(s) in most_costly_leftover_producing_meals
-      if(value == max_meal_cost) {
+      if(value == meal_cost_max) { // 2.
         most_costly_leftover_producing_meals.push_back(key);
       }
-      // put meal(s) with the highest frequency in most_common_leftover_names_
-      if(value == top_meal) {
+      // put highest frequency meal(s) in most_common_leftover_names_
+      if(value == meal_name_max) { // 1.
         most_common_leftover_names_.push_back(key);
       }
-      // TODO: do same for 4. and 5. above
-    }
+      // put highest freq reason in most_common_leftover_reasons_
+      if(value == reason_max) { // 4.
+        most_common_leftover_reasons_.push_back(key);
+      } 
+      // put highest freq disp mech in most_common_disposal_mechanisms_
+      if(value == disposal_max) { // 5.
+        most_common_disposal_mechanisms_.push_back(key);
+      }
+    } // end of 2nd for-loop
     
-    
-    //   use the conditions to determine leftover reduction
-    //   strategies. Put them in the right container.
+    // • Use the conditions to determine leftover reduction
+    // strategies. Put them in the right container.
   
   } // end of default constructor 
 
