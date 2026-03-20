@@ -49,7 +49,7 @@ class LeftoverTrackerBackend {
   // A top level class object to leftovers.
   // TODO: Add a LeftoverTracker object as a member variable here. Make sure you. DONE
   // stick to Google's style guide when naming your variable.
-  LeftoverTracker leftover_tracker_;
+  LeftoverTracker leftover_tracker_; // DONE
   // File path of the file that stores all the leftover records in JSON
   // format. LoadRecordsFromJSONFile()
   const std::string& kLeftoverRecordsFilepath;

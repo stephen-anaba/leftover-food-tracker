@@ -9,6 +9,7 @@
 
 #include <algorithm> // for std::find()
 #include <vector> // for dynamic container
+// #include <unordered_set> // for set
 
 class LeftoverTracker {
 private:
@@ -16,39 +17,15 @@ private:
   std::vector<LeftoverRecord> record_list_;
   // instance of LeftoverReport class
   LeftoverReport leftover_report_;
+  // std::unordered_set set; // for efficient lookup
 public:
   // default constructor
   LeftoverTracker() = default;
   
-  // Precondition: User has made a record
+  // TODO: Use std::unordered_set for efficient lookup
+  // Precondition: User has made a leftover record
   // Postcondition: Adds a record to record_list_, returns true if add is successful, else returns false. No duplicate records 
   bool AddRecord(const LeftoverRecord& leftover_record) {
-    // variables for user input
-    /*std::string date = "";
-    std::string meal = "";
-    std::string food_name = "";
-    double quantity_in_ounce = 0.0;
-    std::string leftover_reason = "";
-    std::string disposal_mechanism = "";
-    double cost = 0.0;
-    // get user input
-    std::cout << "Enter date: ";
-    std::cin >> date;
-    std::cout << "Enter meal: ";
-    std::cin >> meal;
-    std::cout << "Enter food name: ";
-    std::cin >> food_name;
-    std::cout << "Enter quantity (in ounce): ";
-    std::cin >> quantity_in_ounce;
-    std::cout << "Enter leftover reason: ";
-    std::cin >> leftover_reason;
-    std::cout << "Enter disposal mechanism: ";
-    std::cin >> disposal_mechanism;
-    std::cout << "Enter cost: ";
-    std::cin >> cost; 
-    // create an instance of LeftoverRecord class
-    LeftoverRecord leftover_record{date, meal, food_name, quantity_in_ounce, leftover_reason, disposal_mechanism, cost}; */
-    
     // if leftover_record is not in record_list, add it & 
     // return true. Else return false
     if(ContainsRecord(leftover_record) == -1) {  
@@ -101,17 +78,7 @@ public:
   // Postcondition: Generates and returns the leftover report
   LeftoverReport GenerateLeftoverReport() const {
     // iterate leftover_report_.GetMostCommonLeftovers(), leftover_report_.GetMostLeftoverProducingMeals(), leftover_report_.GetTotalCostOfLeftovers(), leftover_report_.GetMostCommonReasonsForLeftovers(), leftover_report_.GetCommonDisposalMechanism(), leftover_report_.GetSuggestedStrategiesToReduceLeftovers()
-  }
-
-  // ======================= YOUR CODE HERE =======================
-  // Write the LeftoverTracker class here. Refer to your class design for the
-  // member variables, constructors, and member functions needed.
-  //
-  // Note: mark functions that do not modify the member variables
-  // as const, by writing `const` after the parameter list.
-  // Pass objects by const reference when appropriate.
-  // Remember that std::string is an object!
-  // ===============================================================
+  } 
 };
 
 #endif

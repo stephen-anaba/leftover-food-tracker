@@ -341,15 +341,15 @@ bool LeftoverTrackerBackend::WriteRecordsToJSONFile() const {
   rapidjson::Writer<rapidjson::StringBuffer> writer(ss);
   writer.StartArray();
 
-  std::vector<LeftoverRecord> records;
+  // std::vector<LeftoverRecord> records; // previous declaration
   // TODO: Call the member function in the LeftoverTracker class, on the
   // member object that you added in leftover_tracker.h, that returns all
   // the LeftoverRecord objects. Store the returned records in the vector
   // declared above. Also change the data type of the records vector to `const
-  // std::vector<LettoverRecord>&`.
-  records = leftover_tracker_.GetRecords(); // NOT SURE
-
-  for (LeftoverRecord record : records) {
+  // std::vector<LettoverRecord>&` - better declaration
+  const std::vector<LeftoverRecord>& records = leftover_tracker_.GetRecords(); // DONE. NOT SURE
+  // since we're using const & to avoid copies, avoid copying each record while looping through them 
+  for (const auto& /*LeftoverRecord*/ record : records) {
     SerializeLeftoverRecordToJSON(record, &writer);
   }
   writer.EndArray();
@@ -371,6 +371,7 @@ crow::json::wvalue LeftoverTrackerBackend::AddRecord(
   // member object that you added in leftover_tracker.h, that adds a
   // `record` and returns the status of the add operation as a bool. Store the
   // returned value in the bool declared above.
+  add_result = leftover_tracker_.AddRecord(record); // DONE
   status[kStatusSuccess] = add_result;
 
   return status;
@@ -383,21 +384,23 @@ crow::json::wvalue LeftoverTrackerBackend::DeleteRecord(
 
   bool delete_result = false;
   // TODO: Call the member function in the LefrtoverTracker class, on the
-  // member object that you added in leftovere_tracker.h, that deletes
+  // member object that you added in leftover_tracker.h, that deletes
   // `record` and returns the status of the delete operation as a bool. Store
   // the returned value in the bool declared above.
+  delete_result = leftover_tracker_.DeleteRecord(record); // DONE
   status[kStatusSuccess] = delete_result;
 
   return status;
 }
 
 crow::json::wvalue LeftoverTrackerBackend::GetRecords() const {
-  std::vector<LeftoverRecord> records;
+  // std::vector<LeftoverRecord> records; // prev declaration
   // TODO: Call the member function in the LeftoverTracker class, on the
   // member object that you added in leftover_tracker.h, that returns all
   // the LeftoverRecord objects. Store the returned records in the vector
   // declared above. Also change the data type of the records vector to `const
   // std::vector<LeftoverRecord>&`.
+  const std::vector<LeftoverRecord>& records = leftover_tracker_.GetRecords(); // DONE
 
   crow::json::wvalue records_json({});
   records_json[kNumRecords] = records.size();
@@ -416,6 +419,7 @@ crow::json::wvalue LeftoverTrackerBackend::GetLeftoverReport() const {
   // member object that you added in leftover_tracker.h, that generates a
   // LeftoverReport object using all the LeftoverRecords and returns it.
   // Store the returned value in the `generated_report` object declared above.
+  generated_report = leftover_tracker_.GenerateLeftoverReport(); // DONE
 
   return LeftoverReportToCrowJSON(generated_report);
 }
