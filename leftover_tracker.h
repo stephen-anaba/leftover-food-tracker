@@ -17,54 +17,33 @@ private:
   std::vector<LeftoverRecord> record_list_;
   // instance of LeftoverReport class
   LeftoverReport leftover_report_;
-  // std::unordered_set set; // for efficient lookup
+  std::unordered_set<LeftoverRecord> record_set_; // for efficient lookup
 public:
   // default constructor
   LeftoverTracker() = default;
   
-  // TODO: Use std::unordered_set for efficient lookup
-  // Precondition: User has made a leftover record
-  // Postcondition: Adds a record to record_list_, returns true if add is successful, else returns false. No duplicate records 
-  bool AddRecord(const LeftoverRecord& leftover_record) {
-    // if leftover_record is not in record_list, add it & 
-    // return true. Else return false
-    if(ContainsRecord(leftover_record) == -1) {  
-      record_list_.push_back(leftover_record);
-      return true;
-    }
-    return false; 
-  } // end of AddRecord()
-
-  // Precondition: Target must be LeftoverRecord type & record_list_ must not be empty
-  // Postcondition: Returns true when target record exists in record_list_, elser returns false
-  int ContainsRecord(const LeftoverRecord& target) {
-    for(int i = 0; i < record_list_.size(); i++) {
-      if(
-          record_list_[i].GetDate() == target.GetDate() &&
-          record_list_[i].GetMeal() == target.GetMeal() &&
-          record_list_[i].GetName() == target.GetName() &&
-          record_list_[i].GetQuantity() == target.GetQuantity() &&
-          record_list_[i].GetReason() == target.GetReason() &&
-          record_list_[i].GetDisposalMechanism() == target.GetDisposalMechanism() &&
-          record_list_[i].GetCost() == target.GetCost()
-          ) {
-        return i;
-      }
-    }
-    return -1;
-  } // end of ContainsRecord(target)
+  // Precondition: User has created a leftover record
+  // Postcondition: Adds new record_list_ & return true if successful, else returns false. Avoids duplicate records 
+  bool AddRecord(const LeftoverRecord& new_record) { // DONE
+    int set_size = record_set_.size(); // get initial record_set size
+    record_set_.insert(new_record); // try adding new_record to record_set_
+    if(record_set_.size() > set_size) { // if successful...
+      record_list_.push_back(new_record); // then add it to record_list_
+      return true; // and return true
+    }// ContainsRecord(leftover_record) == -1
+    return false; // otherwise, return false
+  } // end of AddRecord() 
   
   // Precondition: User has created leftover record(s)
-  // Postcondition: Delete a record from record_list_. Return true if delete is successful, false if record not founde
-  bool DeleteRecord(const LeftoverRecord& record) {
-    // if not found, return false
-    int found_index = ContainsRecord(record);
-    if(found_index == -1) {
+  // Postcondition: Delete `record` from record_list_ & return true, else returns false
+  bool DeleteRecord(const LeftoverRecord& record) { // DONE
+    // if record is not in record_set, just return false
+    if(!record_set_.contains(record)) {
       return false;
-    } // if found, erase record at matching index & return true
-    if(record_list_.size() >= found_index) {
-      record_list.erase(record_list_.begin() + found_index); 
-    }
+    } 
+    // get record index, use it to erase record & return true
+    int record_index = std::find(record_list_.begin(), record_list_.end(), record); 
+    record_list_.erase(record_list_.begin() + record_index);  
     return true;
   }
 

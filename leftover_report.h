@@ -33,13 +33,13 @@ public:
     std::string most_costly_meal = ""; // most costly meal holder
     int name_max = 1;
     std::string name = ""; // name holder
-    std::string prev_name = record_list_[0].GetName(); // previous name
+    //std::string prev_name = record_list_[0].GetName(); // previous name
     int reason_max = 1;
     std::string reason = ""; // reason holder
-    std::string prev_reason = record_list_[0].GetReason(); // previous reason
+    //std::string prev_reason = record_list_[0].GetReason(); // prev reason
     int disposal_max = 1;
     std::string disposal = ""; // disposal mech holder
-    std::string prev_disposal = record_list_[0].GetDisposalMechanism(); // previous disposal
+    //std::string prev_disposal = record_list_[0].GetDisposalMechanism(); // prev disposal
     std::unordered_map<std::string, int> counter_map; // one map option
     std::unordered_map<std::string, double> meal_cost_map; // continue..
 
@@ -108,18 +108,17 @@ public:
       counter_map[record.GetDisposalMechanism()]++; // count disp mech
       if(counter_map[record.GetDisposalMechanism()] > disposal_max) {
         // ensure container is empty
-        if(!most_common_disposal_mechanisms_.empty()) { // 
+        if(!most_common_disposal_mechanisms_.empty()) { // DONE
           most_common_disposal_mechanisms_.erase();
         }
         disposal_max = counter_map[record.GetDisposalMechanism()];
-        disposal = record.GetDisposalMechanism(); // not disposal mech
+        disposal = record.GetDisposalMechanism(); // note disposal mech
         most_common_disposal_mechanisms_.push_back(disposal); // contain it
       }
       // if another disposal shares disposal_max, contain it too
       if(disposal_max > 1 && disposal_max == counter_map[record.GetDisposalMechanism()]) {
         most_common_disposal_mechanisms_.push_back(record.GetDisposalMechanism());
-      }
-    
+      } 
     } // end of 1st for-loop
   
     // • Use inverse lookup to put values in their containers 
@@ -145,14 +144,14 @@ public:
     // • Use the conditions to determine leftover reduction
     // strategies. Put them in the right container.
     for(const std::string& reason: most_common_disposal_mechanisms_) {
-      if(reason != "Expired" && find(suggested_strategies_to_reduce_leftovers_.begin(), suggested_strategies_to_reduce_leftovers_.end(), reason) == suggested_strategies_to_reduce_leftovers_.end() { // if reason != "Expired"
+      if(reason != "Expired" && std::find(suggested_strategies_to_reduce_leftovers_.begin(), suggested_strategies_to_reduce_leftovers_.end(), reason) == suggested_strategies_to_reduce_leftovers_.end() { // 4. reason != "Expired"
         suggested_strategies_to_reduce_leftovers_.push_back("Recycle lefto overs"); 
       }
-      if(reason == "Expired") {
+      if(reason == "Expired") { // 1. reason == "Expired"
         suggested_strategies_to_reduce_leftovers_.push_back("Donate before expiration");
-      } else if (reason == "Tastes bad") {
+      } else if (reason == "Tastes bad") { // 2. reasn == "Tasted bad"
         suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
-      } else if(reason == "Too much left overs") {
+      } else if(reason == "Too much left overs") { // 3. "2much leftovers"
         suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");;
         suggested_strategies_to_reduce_leftovers_.push_back("Cook small servings");
       }
