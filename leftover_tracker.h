@@ -49,14 +49,30 @@ public:
 
   // Precondition: User has entered leftover record(s)
   // Postcondition: Provides external classes or functions the means to access list of leftover record from memory
-  std::vector<LeftoverRecord> GetRecords() const {
+  std::vector<LeftoverRecord> GetRecords() const { // DONE
     return record_list_;
   }
 
   // Precondition: User has created leftover record(s)
   // Postcondition: Generates and returns the leftover report
-  LeftoverReport GenerateLeftoverReport() const {
-    // iterate leftover_report_.GetMostCommonLeftovers(), leftover_report_.GetMostLeftoverProducingMeals(), leftover_report_.GetTotalCostOfLeftovers(), leftover_report_.GetMostCommonReasonsForLeftovers(), leftover_report_.GetCommonDisposalMechanism(), leftover_report_.GetSuggestedStrategiesToReduceLeftovers()
+  LeftoverReport GenerateLeftoverReport() const { 
+    // TODO: display most common leftover names
+    std::vector<std::string> names = leftover_report_.GetMostCommonLeftoversNames();
+    
+    // TODO: display most costly leftover meal(s)
+    std::vector<std::string> costly_meal = leftover_report_.GetMostCostlyLeftoverProducingMeals();
+    
+    // TODO: display total cost of leftovers
+    std::vector<std::string> total_cost =eftover_report_.GetTotalCostOfLeftovers();
+    
+    // TODO: display most common leftover reasons
+    std::vector<std::string> reasons = eftover_report_.GetMostCommonLeftoverReasons();
+    
+    // TODO: display most common disposal mechanisms
+    leftover_report_.GetMostCommonDisposalMechanisms();
+    
+    // TODO: display suggested strategies for reducing leftover
+    leftover_report_.GetSuggestedStrategiesToReduceLeftovers();
   } 
 };
 
