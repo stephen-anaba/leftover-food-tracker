@@ -20,32 +20,23 @@ private:
 public:
   // default constructor
   LeftoverRecord() = default;
-  // non-defaault constructor
-  LeftoverRecord(
-      const std::string& date,
-      const std::string& meal,
-      const std::string& name,
-      double quantity,
-      const std::string& reason,
-      const std::string& disposal_mechanism,
-      double cost
-      ) : date_(date), meal_(meal), name_(name), quantity_(quantity), reason_(reason), disposal_mechanism_(disposal_mechanism), cost_(cost) {}
+  
   // setters
   void SetDate(const std::string& date) { date_ = date; }
   void SetMeal(const std::string& meal) { meal_ = meal; }
   void SetName(const std::string& name) { name_ = name; }
-  void SetQuantity(double quantitiy) { quantity_ = quantity; }
+  void SetQuantity(double quantity) { quantity_ = quantity; }
   void SetReason(const std::string& reason) { reason_ = reason; }
   void SetDisposalMechanism(const std::string& disposal_mechanism) { disposal_mechanism_ = disposal_mechanism; }
   void SetCost(double cost) { cost_ = cost; }
   // getters
-  std::string GetDate() const { date_ = date; }
-  std::string GetMeal() const { meal_ = meal; }
-  std::string GetName() const { name_ = name; }
-  double GetQuantity() const { quantity_ = quantity; }
-  std::string GetReason() const { reason_ = reason; }
-  std::string GetDisposalMechanism() const { disposal_mechanism_ = disposal_mechanism; }
-  double GetCost() const { cost_ = cost; } 
+  std::string GetDate() const { return date_; }
+  std::string GetMeal() const { return meal_; }
+  std::string GetName() const { return name_; }
+  double GetQuantity() const { return quantity_; }
+  std::string GetReason() const { return reason_; }
+  std::string GetDisposalMechanism() const { return disposal_mechanism_; }
+  double GetCost() const { return cost_; } 
 };
 
 #endif

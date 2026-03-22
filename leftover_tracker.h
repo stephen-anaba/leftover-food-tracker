@@ -7,6 +7,8 @@
 // stevoclock@csu.fullerton.edu
 // 3takita
 
+#include "leftover_record.h"
+#include "leftover_report.h"
 #include <algorithm> // for std::find()
 #include <vector> // for dynamic container
 // #include <unordered_set> // for set
@@ -15,15 +17,16 @@ class LeftoverTracker {
 private:
   // container for leftover records created by user to be used to construct leftover report
   std::vector<LeftoverRecord> record_list_;
-  // instance of LeftoverReport class
-  LeftoverReport leftover_report_;
+  // instance of LeftoverReport class 
   std::unordered_set<LeftoverRecord> record_set_; // for efficient lookup
 public:
   // default constructor
-  LeftoverTracker() = default;
+  LeftoverTracker(const std::vector<LeftoverRecord>& record_list) : record_list_(record_list) {}
   
+  // =================================================================
   // Precondition: User has created a leftover record
   // Postcondition: Adds new record_list_ & return true if successful, else returns false. Avoids duplicate records 
+  // ==================================================================
   bool AddRecord(const LeftoverRecord& new_record) { // DONE
     int set_size = record_set_.size(); // get initial record_set size
     record_set_.insert(new_record); // try adding new_record to record_set_
@@ -34,8 +37,10 @@ public:
     return false; // otherwise, return false
   } // end of AddRecord() 
   
+  // ===================================================================
   // Precondition: User has created leftover record(s)
   // Postcondition: Delete `record` from record_list_ & return true, else returns false
+  // ==================================================================
   bool DeleteRecord(const LeftoverRecord& record) { // DONE
     // if record is not in record_set, just return false
     if(!record_set_.contains(record)) {
@@ -47,16 +52,24 @@ public:
     return true;
   }
 
+  // ====================================================================
   // Precondition: User has entered leftover record(s)
   // Postcondition: Provides external classes or functions the means to access list of leftover record from memory
+  // ====================================================================
   std::vector<LeftoverRecord> GetRecords() const { // DONE
     return record_list_;
   }
 
+  // ====================================================================
   // Precondition: User has created leftover record(s)
   // Postcondition: Generates and returns the leftover report
-  LeftoverReport GenerateLeftoverReport() const { 
-    if(!record_list_.empty()) {
+  // ====================================================================
+  LeftoverReport GenerateLeftoverReport() const {
+    // instantiate a LeftoverReport object using record_list_
+    LeftoverReport leftover_report_{record_list_}; 
+    return leftover_report_;
+
+    /*if(!record_list_.empty()) {
       // display most common leftover names 
       std::cout << "Most common leftovers:\n";
       if(leftover_report_.GetMostCommonLeftoversNames().size() > 1) {
@@ -114,7 +127,7 @@ public:
       } else {
         std::cout << strategy;
       } 
-    } // end of if-statement 
+    }*/ // end of if-statement 
   } 
 };
 
