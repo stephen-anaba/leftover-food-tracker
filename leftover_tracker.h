@@ -56,23 +56,65 @@ public:
   // Precondition: User has created leftover record(s)
   // Postcondition: Generates and returns the leftover report
   LeftoverReport GenerateLeftoverReport() const { 
-    // TODO: display most common leftover names
-    std::vector<std::string> names = leftover_report_.GetMostCommonLeftoversNames();
+    if(!record_list_.empty()) {
+      // display most common leftover names 
+      std::cout << "Most common leftovers:\n";
+      if(leftover_report_.GetMostCommonLeftoversNames().size() > 1) {
+        for(const auto& name : \
+            leftover_report_.GetMostCommonLeftoversNames()) {
+          std::cout << name << "\n";
+        }
+      } else {
+        std::cout << name;
+      } 
+
+      // display most costly leftover meal(s)
+      std::cout << "Most costly leftover meal(s):\n";
+      if(leftover_report_.GetMostCostlyLeftoverProducingMeals().size() > 1) {
+        for(const auto& meal : leftover_report_.GetMostCostlyLeftoverProducingMeals()) {
+          std::cout << meal << "\n";
+        }
+      } else {
+        std::cout << meal;
+      } 
     
-    // TODO: display most costly leftover meal(s)
-    std::vector<std::string> costly_meal = leftover_report_.GetMostCostlyLeftoverProducingMeals();
+      // display total cost of leftovers
+      std::cout << "Total leftover food cost:\n";
+      std::cout << leftover_report_.GetTotalCostOfLeftovers();
     
-    // TODO: display total cost of leftovers
-    std::vector<std::string> total_cost =eftover_report_.GetTotalCostOfLeftovers();
+      // display most common leftover reasons
+      std::cout << "Most common leftover reason:\n";
+      if(leftover_report_.GetMostCommonLeftoverReasons().size() > 1) {
+        for(const auto& reason : \
+            leftover_report_.GetMostCommonLeftoverReasons()) {
+          std::cout << reason << "\n";
+        }
+      } else {
+        std::cout << reason;
+      } 
     
-    // TODO: display most common leftover reasons
-    std::vector<std::string> reasons = eftover_report_.GetMostCommonLeftoverReasons();
+      // display most common disposal mechanisms
+      std::cout << "Most common disposal mechanism:\n";
+      if(leftover_report_.GetMostCommonDisposalMechanisms().size() > 1) {
+        for(const auto& disposal : \
+            leftover_report_.GetMostCommonDisposalMechanisms()) {
+          std::cout << disposal << "\n";
+        }
+      } else {
+        std::cout << disposal;
+      }  
     
-    // TODO: display most common disposal mechanisms
-    leftover_report_.GetMostCommonDisposalMechanisms();
-    
-    // TODO: display suggested strategies for reducing leftover
-    leftover_report_.GetSuggestedStrategiesToReduceLeftovers();
+      // display suggested strategies for reducing leftover
+      std::cout << "Suggested strategies to reduce leftover:\n";
+      if(leftover_report_.GetSuggestedStrategiesToReduceLeftovers().size() > 1) {
+        for(const auto& strategy : \
+            leftover_report_.GetSuggestedStrategiesToReduceLeftovers()) {
+          std::cout << strategy << "\n";
+        }
+      } else {
+        std::cout << strategy;
+      } 
+    } // end of if-statement 
   } 
 };
 
