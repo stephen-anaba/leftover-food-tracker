@@ -120,7 +120,7 @@ public:
     // • Use the conditions to determine leftover reduction
     // strategies. Put them in the right container.
     for(const std::string& reason: most_common_disposal_mechanisms_) {
-      if(reason != "Expired" && std::find(suggested_strategies_to_reduce_leftovers_.begin(), suggested_strategies_to_reduce_leftovers_.end(), reason) == suggested_strategies_to_reduce_leftovers_.end() { // 4. reason != "Expired"
+      if(reason != "Expired" && std::find(suggested_strategies_to_reduce_leftovers_.begin(), suggested_strategies_to_reduce_leftovers_.end(), reason) == suggested_strategies_to_reduce_leftovers_.end()) { // 4. reason != "Expired"
         suggested_strategies_to_reduce_leftovers_.push_back("Recycle lefto overs"); 
       }
       if(reason == "Expired") { // 1. reason == "Expired"
@@ -128,7 +128,7 @@ public:
       } else if (reason == "Tastes bad") { // 2. reasn == "Tasted bad"
         suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
       } else if(reason == "Too much left overs") { // 3. "2much leftovers"
-        suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");;
+        suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
         suggested_strategies_to_reduce_leftovers_.push_back("Cook small servings");
       }
     } // end of for-loop
@@ -167,7 +167,7 @@ public:
   // Precondition: User has entered a leftover record
   // Postcondition: Returns most common strategies to reduce leftovers
   const std::vector<std::string>& GetSuggestedStrategiesToReduceLefotvers() const {
-    return most_common_strategies_to_reduce_leftovers_;
+    return suggested_strategies_to_reduce_leftovers_;
   } 
 };
 

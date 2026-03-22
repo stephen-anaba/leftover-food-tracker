@@ -10,8 +10,8 @@
 #include "leftover_record.h"
 #include "leftover_report.h"
 #include <algorithm> // for std::find()
+#include <unordered_set> // for set
 #include <vector> // for dynamic container
-// #include <unordered_set> // for set
 
 class LeftoverTracker {
 private:
@@ -33,7 +33,7 @@ public:
     if(record_set_.size() > set_size) { // if successful...
       record_list_.push_back(new_record); // then add it to record_list_
       return true; // and return true
-    }// ContainsRecord(leftover_record) == -1
+    }
     return false; // otherwise, return false
   } // end of AddRecord() 
   
@@ -42,15 +42,18 @@ public:
   // Postcondition: Delete `record` from record_list_ & return true, else returns false
   // ==================================================================
   bool DeleteRecord(const LeftoverRecord& record) { // DONE
-    // if record is not in record_set, just return false
-    if(!record_set_.contains(record)) {
+    // if record is not in record_set, just return false. C++ v14 does not support .contains(), so .count() will be used
+    if(!record_set_.count(record)) { 
       return false;
     } 
-    // get record index, use it to erase record & return true
-    int record_index = std::find(record_list_.begin(), record_list_.end(), record); 
-    record_list_.erase(record_list_.begin() + record_index);  
+    // iterate to record with `it`. 
+    auto it = std::find(record_list_.begin(), record_list_.end(), record); 
+    // Use `it` to erase record & return true
+    if(it != record_list_.end()) {
+      record_list_.erase(it);
+    } 
     return true;
-  }
+  } // vec.erase(vec.begin() + pos, vec.begin() + pos + len);
 
   // ====================================================================
   // Precondition: User has entered leftover record(s)

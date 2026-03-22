@@ -7,6 +7,8 @@
 // stevoclock@csu.fullerton.edu
 // 3takita
 
+#include <string> // for the std::string class
+
 class LeftoverRecord {
 private:
   // private member variables
