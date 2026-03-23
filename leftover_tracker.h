@@ -42,18 +42,19 @@ public:
   // Postcondition: Delete `record` from record_list_ & return true, else returns false
   // ==================================================================
   bool DeleteRecord(const LeftoverRecord& record) { // DONE
-    // if record is not in record_set, just return false. C++ v14 does not support .contains(), so .count() will be used
-    if(!record_set_.count(record)) { 
+    // if record doesn't exist, return false. No .contains() in C++ v14.
+    if(!record_set_.count(record)) { // .count works the same
       return false;
     } 
-    // iterate to record with `it`. 
+    // iterate to record with the iterator `it`. 
     auto it = std::find(record_list_.begin(), record_list_.end(), record); 
-    // Use `it` to erase record & return true
+    // Use `it` to erase record from record_list_
     if(it != record_list_.end()) {
       record_list_.erase(it);
     } 
-    return true;
-  } // vec.erase(vec.begin() + pos, vec.begin() + pos + len);
+    record_set_.erase(record); // remove the record from record_set_
+    return true; // return true
+  } 
 
   // ====================================================================
   // Precondition: User has entered leftover record(s)

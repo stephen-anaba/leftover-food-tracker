@@ -2,7 +2,7 @@
 #define LEFTOVER_RECORD_H_
 
 // Stephen Anaba
-// CPSC 121L-01
+// CPSC 121L-16
 // 3/16/2026
 // stevoclock@csu.fullerton.edu
 // 3takita
@@ -39,6 +39,18 @@ public:
   std::string GetReason() const { return reason_; }
   std::string GetDisposalMechanism() const { return disposal_mechanism_; }
   double GetCost() const { return cost_; } 
+  // overload function for `== operator`
+  bool operator==(const LeftoverRecord& other) const {
+    return (
+      date_ == other.GetDate() &&
+      meal_ == other.GetMeal() &&
+      name_ == other.GetName() &&
+      quantity_ == other.GetQuantity() &&
+      reason_ == other.GetReason() &&
+      disposal_mechanism_ == other.GetDisposalMechanism() &&
+      cost_ == other.GetCost()
+    );
+  }
 };
 
 #endif
