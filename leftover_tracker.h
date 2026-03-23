@@ -17,21 +17,22 @@ class LeftoverTracker {
 private:
   // container for leftover records created by user to be used to construct leftover report
   std::vector<LeftoverRecord> record_list_;
-  // instance of LeftoverReport class 
-  std::unordered_set<LeftoverRecord> record_set_; // for efficient lookup
+  // TODO: use std::unordered_set<string> (date) to ensure unique entryies 
+  std::unordered_set<std::string> date_set_; // for efficient lookup, using date
 public:
   // default constructor
   LeftoverTracker(const std::vector<LeftoverRecord>& record_list) : record_list_(record_list) {}
   
   // =================================================================
   // Precondition: User has created a leftover record
-  // Postcondition: Adds new record_list_ & return true if successful, else returns false. Avoids duplicate records 
+  // Postcondition: Adds new record_list_ & return true if successful,
+  // else returns false. Avoids duplicate records 
   // ==================================================================
   bool AddRecord(const LeftoverRecord& new_record) { // DONE
-    int set_size = record_set_.size(); // get initial record_set size
-    record_set_.insert(new_record); // try adding new_record to record_set_
-    if(record_set_.size() > set_size) { // if successful...
-      record_list_.push_back(new_record); // then add it to record_list_
+    int set_size = date_set_.size(); // get initial date_set size
+    date_set_.insert(new_record.GetDate()); // try adding new_record's date to date_set_
+    if(date_set_.size() > set_size) { // if successful...
+      record_list_.push_back(new_record); // then add new_record to record_list_
       return true; // and return true
     }
     return false; // otherwise, return false
@@ -42,17 +43,17 @@ public:
   // Postcondition: Delete `record` from record_list_ & return true, else returns false
   // ==================================================================
   bool DeleteRecord(const LeftoverRecord& record) { // DONE
-    // if record doesn't exist, return false. No .contains() in C++ v14.
-    if(!record_set_.count(record)) { // .count works the same
+    // if record's date doesn't exist, return false. No contains() in C++ v14.
+    if(!date_set_.count(record.GetDate())) { // .count works the same
       return false;
-    } 
-    // iterate to record with the iterator `it`. 
+    } // otherwise
+    // find the iterator 'it' of the matching record. 
     auto it = std::find(record_list_.begin(), record_list_.end(), record); 
     // Use `it` to erase record from record_list_
     if(it != record_list_.end()) {
       record_list_.erase(it);
     } 
-    record_set_.erase(record); // remove the record from record_set_
+    date_set_.erase(record.GetDate()); // remove the record's date from date_set_
     return true; // return true
   } 
 
