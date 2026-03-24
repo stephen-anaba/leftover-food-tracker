@@ -46,7 +46,7 @@ void SerializeLeftoverRecordToJSON(
   // TODO 4. Use the accessor/getter function for quantity from the
   // LeftoverRecord class object to get the quantity and store it in the
   // quantity variable declared above. DONE
-  quantitiy = record.GetQuantity();
+  quantity = record.GetQuantity();
   writer->Double(quantity);
 
   writer->String(kFileDataLeftoverReason);  // DO NOT MODIFY
@@ -273,7 +273,7 @@ LeftoverRecord QueryStringToLeftoverRecord(
   // TODO 4. Get the quantity from the query_string using
   // std::stod(query_string.get(kWebDataQtyInOz)), and set it in the `record`
   // object using the setter in LeftoverRecord class.
-  record.SetQuantity(query_string.get(kWebDataQtyInOz)); // DONE
+  record.SetQuantity(std::stod(query_string.get(kWebDataQtyInOz))); // DONE
 
   // TODO 5. Get the leftover reason from the query_string using
   // query_string.get(kWebDataLeftoverReason), and set it in the `record` object

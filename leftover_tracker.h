@@ -2,7 +2,7 @@
 #define LEFTOVER_TRACKER_H_
 
 // Stephen Anaba
-// CPSC 121L-01
+// CPSC 121L-16
 // 3/16/2026
 // stevoclock@csu.fullerton.edu
 // 3takita
@@ -15,12 +15,15 @@
 
 class LeftoverTracker {
 private:
-  // container for leftover records created by user to be used to construct leftover report
+  // container for leftover records created by user 
   std::vector<LeftoverRecord> record_list_;
-  // TODO: use std::unordered_set<string> (date) to ensure unique entryies 
-  std::unordered_set<std::string> date_set_; // for efficient lookup, using date
+  // for efficient lookup, using date 
+  std::unordered_set<std::string> date_set_;
+
 public:
   // default constructor
+  LeftoverTracker() = default;
+  // non-default constructor
   LeftoverTracker(const std::vector<LeftoverRecord>& record_list) : record_list_(record_list) {}
   
   // =================================================================
