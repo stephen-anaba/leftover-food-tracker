@@ -1,16 +1,16 @@
 #ifndef LEFTOVER_REPORT_H_
 #define LEFTOVER_REPORT_H_
 
-// Please fill in below.
-// <Your name>
-// <Your section number> (e.g. CPSC 121L-01)
-// <Date>
-// <Your csu.fullerton.edu email>
-// <Your GitHub username>
+// Stephen Anaba
+// CPSC 121L-16
+// 3/22/26
+// stevoclock@csu.fullerton.edu
+// 3takita
 
 #include "leftover_record.h"
 #include <vector> // for vector containers
 #include <unordered_map> // for frequency lookups
+#include <algorithm>
 
 class LeftoverReport {
 private:
@@ -23,9 +23,11 @@ private:
   std::vector<std::string> most_common_leftover_reasons_;
   std::vector<std::string> most_common_disposal_mechanisms_;
   std::vector<std::string> suggested_strategies_to_reduce_leftovers_;
+
 public:
   // default constructor
   LeftoverReport() = default;
+  
   // non-default constructor
   LeftoverReport(const std::vector<LeftoverRecord>& record_list) : record_list_{}, most_common_leftover_names_{}, most_costly_leftover_producing_meals_{}, total_cost_of_leftovers_{}, most_common_leftover_reasons_{}, most_common_disposal_mechanisms_{}, suggested_strategies_to_reduce_leftovers_{} { 
     // variable & std::unodered_map container declarations
@@ -166,7 +168,7 @@ public:
   
   // Precondition: User has entered a leftover record
   // Postcondition: Returns most common strategies to reduce leftovers
-  const std::vector<std::string>& GetSuggestedStrategiesToReduceLefotvers() const {
+  const std::vector<std::string>& GetSuggestedStrategiesToReduceLeftovers() const {
     return suggested_strategies_to_reduce_leftovers_;
   } 
 };

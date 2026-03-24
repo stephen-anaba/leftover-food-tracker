@@ -19,6 +19,7 @@ private:
   std::string reason_;
   std::string disposal_mechanism_;
   double cost_;
+
 public:
   // default constructor
   LeftoverRecord() = default;
@@ -31,6 +32,7 @@ public:
   void SetReason(const std::string& reason) { reason_ = reason; }
   void SetDisposalMechanism(const std::string& disposal_mechanism) { disposal_mechanism_ = disposal_mechanism; }
   void SetCost(double cost) { cost_ = cost; }
+  
   // getters
   std::string GetDate() const { return date_; }
   std::string GetMeal() const { return meal_; }
@@ -39,6 +41,7 @@ public:
   std::string GetReason() const { return reason_; }
   std::string GetDisposalMechanism() const { return disposal_mechanism_; }
   double GetCost() const { return cost_; } 
+  
   // overload function for `== operator`
   bool operator==(const LeftoverRecord& other) const {
     return (
