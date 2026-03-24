@@ -29,15 +29,31 @@ public:
   // else returns false. Avoids duplicate records 
   // ==================================================================
   bool AddRecord(const LeftoverRecord& new_record) { // DONE
+    // TESTING
+    for (const LeftoverRecord& existing_record : record_list_) {
+        if (existing_record == new_record) {
+            std::cout << "Duplicate found:\n";
+            std::cout << "Existing date: " << existing_record.GetDate() << "\n";
+            std::cout << "New date: " << new_record.GetDate() << "\n";
+            return false;
+        }
+    }
+
+    std::cout << "Adding record with date: " << new_record.GetDate() << "\n";
+    record_list_.push_back(new_record);
+    return true;
+    
+    
+    
     // if new_record already exists, don't add. Return false 
-    for(const LeftoverRecord& existing_record : record_list_) {
+    /* for(const LeftoverRecord& existing_record : record_list_) {
       if(existing_record == new_record) {
         return false;
       }
     }
     // otherwise, add new_record
     record_list_.push_back(new_record);
-    return true; 
+    return true; */
   } // end of AddRecord() 
   
   // ===================================================================
