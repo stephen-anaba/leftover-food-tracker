@@ -30,6 +30,7 @@ public:
   // else returns false. Avoids duplicate records 
   // ==================================================================
   bool AddRecord(const LeftoverRecord& new_record) { // DONE 
+    std::cout << "AddRecord called\n"; // TODO: remove this
     // if new_record already exists, don't add. Return false 
     for(const LeftoverRecord& existing_record : record_list_) {
       if(existing_record == new_record) {
