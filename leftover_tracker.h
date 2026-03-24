@@ -11,6 +11,7 @@
 #include "leftover_report.h"
 #include <algorithm> // for std::find()
 #include <vector> // for dynamic container
+#include <iostream> // TODO: remove after test
 
 class LeftoverTracker {
 private:
