@@ -10,15 +10,12 @@
 #include "leftover_record.h"
 #include "leftover_report.h"
 #include <algorithm> // for std::find()
-#include <unordered_set> // for set
 #include <vector> // for dynamic container
 
 class LeftoverTracker {
 private:
   // container for leftover records created by user 
-  std::vector<LeftoverRecord> record_list_;
-  // for efficient lookup, using date 
-  std::unordered_set<std::string> date_set_;
+  std::vector<LeftoverRecord> record_list_; 
 
 public:
   // default constructor
@@ -32,31 +29,30 @@ public:
   // else returns false. Avoids duplicate records 
   // ==================================================================
   bool AddRecord(const LeftoverRecord& new_record) { // DONE
-    int set_size = date_set_.size(); // get initial date_set size
-    date_set_.insert(new_record.GetDate()); // try adding new_record's date to date_set_
-    if(date_set_.size() > set_size) { // if successful...
-      record_list_.push_back(new_record); // then add new_record to record_list_
-      return true; // and return true
+    // if new_record already exists, don't add. Return false 
+    for(const LeftoverRecord& existing_record : record_list_) {
+      if(existing_record == new_record) {
+        return false;
+      }
     }
-    return false; // otherwise, return false
+    // otherwise, add new_record
+    record_list_.push_back(new_record);
+    return true; 
   } // end of AddRecord() 
   
   // ===================================================================
   // Precondition: User has created leftover record(s)
   // Postcondition: Delete `record` from record_list_ & return true, else returns false
   // ==================================================================
-  bool DeleteRecord(const LeftoverRecord& record) { // DONE
-    // if record's date doesn't exist, return false. No contains() in C++ v14.
-    if(!date_set_.count(record.GetDate())) { // .count works the same
-      return false;
-    } // otherwise
-    // find the iterator 'it' of the matching record. 
+  bool DeleteRecord(const LeftoverRecord& record) { // DONE 
+    // find the iterator 'it' of  matching record. 
     auto it = std::find(record_list_.begin(), record_list_.end(), record); 
-    // Use `it` to erase record from record_list_
-    if(it != record_list_.end()) {
-      record_list_.erase(it);
-    } 
-    date_set_.erase(record.GetDate()); // remove the record's date from date_set_
+    // if the target record does not exists, just return false
+    if(it == record_list_.end()) {
+      return false;
+    }
+    // but if it exists, erase it
+    record_list_.erase(it); 
     return true; // return true
   } 
 
