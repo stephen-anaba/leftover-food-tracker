@@ -45,7 +45,7 @@ public:
   // overload function for `== operator`
   bool operator==(const LeftoverRecord& other) const {
     return (
-      // date_ == other.GetDate() &&
+      date_ == other.GetDate() &&
       meal_ == other.GetMeal() &&
       name_ == other.GetName() &&
       quantity_ == other.GetQuantity() &&
