@@ -87,8 +87,8 @@ public:
   // ====================================================================
   LeftoverReport GenerateLeftoverReport() const {
     // instantiate a LeftoverReport object using record_list_
-    LeftoverReport leftover_report_{record_list_}; 
-    return leftover_report_;
+    return LeftoverReport(record_list_); 
+    // return leftover_report_;
 
     /*if(!record_list_.empty()) {
       // display most common leftover names 

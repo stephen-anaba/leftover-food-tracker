@@ -26,26 +26,25 @@ private:
 
 public:
   // default constructor
-  LeftoverReport(const std::vector<LeftoverRecord>& record_list) : record_list_{}, most_common_leftover_names_{}, most_costly_leftover_producing_meals_{}, total_cost_of_leftovers_{}, most_common_leftover_reasons_{}, most_common_disposal_mechanisms_{}, suggested_strategies_to_reduce_leftovers_{} {}
+  LeftoverReport() = default;
   
-  // non-default constructor
-  LeftoverReport() : record_list_{}, most_common_leftover_names_{}, most_costly_leftover_producing_meals_{}, total_cost_of_leftovers_{}, most_common_leftover_reasons_{}, most_common_disposal_mechanisms_{}, suggested_strategies_to_reduce_leftovers_{} { 
-    // variable & std::unodered_map container declarations
+  // ============= non-default constructor ==============
+  LeftoverReport(const std::vector<LeftoverRecord>& record_list) : record_list_{}, most_common_leftover_names_{}, most_costly_leftover_producing_meals_{}, total_cost_of_leftovers_{}, most_common_leftover_reasons_{}, most_common_disposal_mechanisms_{}, suggested_strategies_to_reduce_leftovers_{} { 
+    // --------- variable & container declarations -----------
     double cost_max = 0.0;
     std::string most_costly_meal = ""; // most costly meal holder
     int name_max = 1;
-    std::string name = ""; // name holder
-    //std::string prev_name = record_list_[0].GetName(); // previous name
+    std::string name = ""; // name holder 
     int reason_max = 1;
-    std::string reason = ""; // reason holder
-    //std::string prev_reason = record_list_[0].GetReason(); // prev reason
+    std::string reason = ""; // reason holder 
     int disposal_max = 1;
-    std::string disposal = ""; // disposal mech holder
-    //std::string prev_disposal = record_list_[0].GetDisposalMechanism(); // prev disposal
-    std::unordered_map<std::string, int> counter_map; // one map option
-    std::unordered_map<std::string, double> meal_cost_map; // continue..
+    std::string disposal = ""; // disposal mech holder 
+    std::unordered_map<std::string, int> counter_map; 
+    std::unordered_map<std::string, double> meal_cost_map;
 
-    // From record_list_, compute values for all object variables
+    // ======================================================= 
+    //    compute values into all object variables
+    // ========================================================
     for(int i = 0; i < record_list_.size(); i++) {
       LeftoverRecord record = record_list_[i];
       // 1. count/store occurence(s) of leftover name 
@@ -84,8 +83,7 @@ public:
       // 3. add up all the cost to total_cost_of_leftovers. // DONE 
       total_cost_of_leftovers_ += record.GetCost(); 
       
-      // 4. count frequency for reason & get most common leftover reason 
-      // Counter(counter_map, record.GetReason());
+      // 4. count reason frequency; get most common leftover reason 
       counter_map[record.GetReason()]++; // count each reason
       if(counter_map[record.GetReason()] > reason_max) { // reason-count
         // ensrure container is empty
@@ -101,8 +99,7 @@ public:
         most_common_leftover_reasons_.push_back(record.GetReason());
       }
       
-      // 5. get max disp mech frequency & contain its diposal mechanism //
-      // Counter(counter_map, record.GetDisposalMechanism());
+      // 5. get max disp mech frequency; contain its dip mech
       counter_map[record.GetDisposalMechanism()]++; // count disp mech
       if(counter_map[record.GetDisposalMechanism()] > disposal_max) {
         // ensure container is empty
@@ -119,8 +116,7 @@ public:
       } 
     } // end of 1st for-loop 
     
-    // • Use the conditions to determine leftover reduction
-    // strategies. Put them in the right container.
+    // determine strategies & put them in the right container.
     for(const std::string& reason: most_common_disposal_mechanisms_) {
       if(reason != "Expired" && std::find(suggested_strategies_to_reduce_leftovers_.begin(), suggested_strategies_to_reduce_leftovers_.end(), reason) == suggested_strategies_to_reduce_leftovers_.end()) { // 4. reason != "Expired"
         suggested_strategies_to_reduce_leftovers_.push_back("Recycle lefto overs"); 
@@ -133,41 +129,53 @@ public:
         suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
         suggested_strategies_to_reduce_leftovers_.push_back("Cook small servings");
       }
-    } // end of for-loop
-  } // end of non-default constructor 
+    } // end of 2nd for-loop
+  } // end of non-default constructor
   
+  // ======================================================
   // Precondition: User has created a leftover record
   // Postcondition: Returns most common leftover name(s)
+  // ======================================================
   const std::vector<std::string>& GetMostCommonLeftoverNames() const {
     return most_common_leftover_names_;
   }
   
+  // ===============================================================
   // Precondition: User has created a leftover record
   // Postcondition: Returns the most costly leftover producing meals
+  // ================================================================
   const std::vector<std::string>& GetMostCostlyLeftoverProducingMeals() const {
     return most_costly_leftover_producing_meals_;
   }
   
+  // ==================================================
   // Precondition: User has created a leftover record
   // Postcondition: Returns the total cost of leftovers
+  // ==================================================
   double GetTotalCostOfLeftovers() const {
     return total_cost_of_leftovers_;
   }
   
+  // =================================================
   // Precondition: User has created a leftover record
   // Postcondition: Returns most common leftover reasons
+  // =================================================
   const std::vector<std::string>& GetMostCommonLeftoverReasons() const {
     return most_common_leftover_reasons_;
   }
   
+  // ======================================================
   // Precondition: User has created a leftover record
   // Postcondition: Returns most common disposal mechanisms
+  // ======================================================
   const std::vector<std::string>& GetMostCommonDisposalMechanisms() const {
     return most_common_disposal_mechanisms_;
   }
   
+  // =======================================================
   // Precondition: User has entered a leftover record
   // Postcondition: Returns most common strategies to reduce leftovers
+  // =======================================================
   const std::vector<std::string>& GetSuggestedStrategiesToReduceLeftovers() const {
     return suggested_strategies_to_reduce_leftovers_;
   } 
