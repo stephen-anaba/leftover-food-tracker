@@ -26,10 +26,10 @@ private:
 
 public:
   // default constructor
-  LeftoverReport() = default;
+  LeftoverReport(const std::vector<LeftoverRecord>& record_list) : record_list_{}, most_common_leftover_names_{}, most_costly_leftover_producing_meals_{}, total_cost_of_leftovers_{}, most_common_leftover_reasons_{}, most_common_disposal_mechanisms_{}, suggested_strategies_to_reduce_leftovers_{} {}
   
   // non-default constructor
-  LeftoverReport(const std::vector<LeftoverRecord>& record_list) : record_list_{}, most_common_leftover_names_{}, most_costly_leftover_producing_meals_{}, total_cost_of_leftovers_{}, most_common_leftover_reasons_{}, most_common_disposal_mechanisms_{}, suggested_strategies_to_reduce_leftovers_{} { 
+  LeftoverReport() : record_list_{}, most_common_leftover_names_{}, most_costly_leftover_producing_meals_{}, total_cost_of_leftovers_{}, most_common_leftover_reasons_{}, most_common_disposal_mechanisms_{}, suggested_strategies_to_reduce_leftovers_{} { 
     // variable & std::unodered_map container declarations
     double cost_max = 0.0;
     std::string most_costly_meal = ""; // most costly meal holder
