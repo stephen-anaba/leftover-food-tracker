@@ -29,7 +29,7 @@ public:
   LeftoverReport() = default;
   
   // ============= non-default constructor ==============
-  LeftoverReport(const std::vector<LeftoverRecord>& record_list) : /*record_list_{},*/most_common_leftover_names_{}, most_costly_leftover_producing_meals_{}, most_common_leftover_reasons_{}, most_common_disposal_mechanisms_{}, suggested_strategies_to_reduce_leftovers_{} { 
+  LeftoverReport(const std::vector<LeftoverRecord>& record_list) : most_common_leftover_names_{}, most_costly_leftover_producing_meals_{}, most_common_leftover_reasons_{}, most_common_disposal_mechanisms_{}, suggested_strategies_to_reduce_leftovers_{} { 
     // --------- variable & container declarations -----------
     double cost_max = 0.0;
     std::string most_costly_meal = ""; // most costly meal holder
@@ -46,7 +46,7 @@ public:
     //    compute values into all object variables
     // ========================================================
     for(int i = 0; i < record_list.size(); i++) {
-      LeftoverRecord record = record_list_[i];
+      LeftoverRecord record = record_list[i];
       // 1. count/store occurence(s) of leftover name 
       counter_map[record.GetName()]++; // name-count
       // if new max for name count is found 
