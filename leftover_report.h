@@ -47,8 +47,7 @@ public:
     // =========================================== 
     //  compute values into all member objects
     // ===========================================
-    for(const LeftoverRecord& record : record_list) {
-      LeftoverRecord record = record_list[i];
+    for(const LeftoverRecord& record : record_list) { 
       // -------- for most_common_leftover_names_ ---------
       name_count[record.GetName()]++; // count
       // put food with most count in most_common_leftover_names
