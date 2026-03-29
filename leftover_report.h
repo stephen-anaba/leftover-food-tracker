@@ -33,25 +33,21 @@ public:
     // --------- variable & map container declarations -----------
     std::unordered_map<std::string, int> name_count;
     int name_max = 1;
-    int name_max_count = 1;
     std::string name_key = "";
     std::unordered_map<std::string, double> meal_cost;
     double meal_max = 0.0;
-    int meal_max_count = 1;
     std::string meal_key = "";
     std::unordered_map<std::string, int> reason_count;
     int reason_max = 1;
-    int reason_max_count = 1;
     std::string reason_key = "";
     std::unorderd_map<std::string, int> disposal_count;
     int disposal_max = 1;
-    int disposal_max_count = 1;
     std::string disposal_key = ""; 
 
-    // ======================================================= 
-    //  compute values into all object variables
-    // ========================================================
-    for(int i = 0; i < record_list.size(); i++) {
+    // =========================================== 
+    //  compute values into all member objects
+    // ===========================================
+    for(const LeftoverRecord& record : record_list) {
       LeftoverRecord record = record_list[i];
       // -------- for most_common_leftover_names_ ---------
       name_count[record.GetName()]++; // count
@@ -66,7 +62,6 @@ public:
       } else if(name_count[record.GetName()] == name_max && name_max > 1) {
         most_common_leftover_names_.push_back(record.GetName()); // push
       }
-
       // ---------- for most_costly_leftover_producing_meals_ ---------
       meal_cost[record.GetMeal()] += record.GetCost(); // count
       // put meal wit most count in  most_constly_leftover_producing_meals_
@@ -80,10 +75,8 @@ public:
       } else if(meal_cost[record.GetMeal()] == meal_max) {
         most_costly_leftover_producing_meals_.push_back(record.GetMeal());
       }
-      
       // --------- for total_cost_of_leftovers_ ----------
       total_cost_of_leftovers_ += record.GetCost();
-
       // ----------- for most_common_leftover_reasons_ ----------
       reason_count[record.GetReason()]++;
       // determin key for most common leftover reason
@@ -97,7 +90,6 @@ public:
       } else if(reason_count[record.GetReason()] == reason_max) {
         most_common_leftover_reasons_.push_back(record.GetReason());
       }
-      
       // ----------- for most_common_disposal_mechanisms_ -----------
       disposal_count[record.GetDisposalMechanism()]++;
      // determine key for most common disposal mechanism
