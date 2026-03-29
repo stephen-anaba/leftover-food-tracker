@@ -40,7 +40,7 @@ public:
     std::unordered_map<std::string, int> reason_count;
     int reason_max = 1;
     std::string reason_key = "";
-    std::unorderd_map<std::string, int> disposal_count;
+    std::unordered_map<std::string, int> disposal_count;
     int disposal_max = 1;
     std::string disposal_key = ""; 
 
@@ -56,7 +56,7 @@ public:
         if(most_common_leftover_names_.empty()) { // & container empty
           most_common_leftover_names_.push_back(record.GetName()); // push
         }
-        most_common_leftover_names_.erase(); // else, erase container first
+        most_common_leftover_names_.clear(); // else, clear container first
         most_common_leftover_names_.push_back(record.GetName()); // push   
         name_max = name_count[record.GetName()]; // & record new max
       } else if(name_count[record.GetName()] == name_max && name_max > 1) {
@@ -69,7 +69,7 @@ public:
         if(most_costly_leftover_producing_meals_.empty()) {
           most_costly_leftover_producing_meals_.push_back(record.GetMeal());
         }
-        most_costly_leftover_producing_meals_.erase();
+        most_costly_leftover_producing_meals_.clear();
         most_costly_leftover_producing_meals_.push_back(record.GetMeal());
         meal_max = meal_cost[record.GetMeal()];
       } else if(meal_cost[record.GetMeal()] == meal_max) {
@@ -84,7 +84,7 @@ public:
         if(most_common_leftover_reasons_.empty()) {
           most_common_leftover_reasons_.push_back(record.GetReason());
         }
-        most_common_leftover_reasons_.erase();
+        most_common_leftover_reasons_.clear();
         most_common_leftover_reasons_.push_back(record.GetReason());
         reason_max = reason_count[record.GetReason()];
       } else if(reason_count[record.GetReason()] == reason_max) {
@@ -97,7 +97,7 @@ public:
        if(most_common_disposal_mechanisms_.empty()) {
           most_common_disposal_mechanisms_.push_back(record.GetDisposalMechanism());
        }
-       most_common_disposal_mechanisms_.erase();
+       most_common_disposal_mechanisms_.clear();
        most_common_disposal_mechanisms_.push_back(record.GetDisposalMechanism());
        disposal_max = disposal_count[record.GetDisposalMechanism()]; 
      } 
@@ -126,7 +126,7 @@ public:
         if(most_common_leftover_reasons_.empty()) {
           most_common_leftover_reasons_.push_back(record.GetReason());
         }
-        most_common_leftover_reasons_.erase();
+        most_common_leftover_reasons_.clear();
         most_common_leftover_reasons_.push_back(record.GetReason());
         reason_max = reason_count[record.GetReason()];
       } else if(reason_count[record.GetReason()] == reason_max) {
