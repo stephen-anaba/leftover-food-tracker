@@ -19,7 +19,7 @@ private:
   // computed values to be used to prepare leftover report
   std::vector<std::string> most_common_leftover_names_;
   std::vector<std::string> most_costly_leftover_producing_meals_;
-  double total_cost_of_leftovers_ = 0.0;
+  double total_cost_of_leftovers_;
   std::vector<std::string> most_common_leftover_reasons_;
   std::vector<std::string> most_common_disposal_mechanisms_;
   std::vector<std::string> suggested_strategies_to_reduce_leftovers_;
@@ -29,95 +29,89 @@ public:
   LeftoverReport() = default;
   
   // ============= non-default constructor ==============
-  LeftoverReport(const std::vector<LeftoverRecord>& record_list) : most_common_leftover_names_{}, most_costly_leftover_producing_meals_{}, most_common_leftover_reasons_{}, most_common_disposal_mechanisms_{}, suggested_strategies_to_reduce_leftovers_{} { 
-    // --------- variable & container declarations -----------
-    double cost_max = 0.0;
-    std::string most_costly_meal = ""; // most costly meal holder
+  LeftoverReport(const std::vector<LeftoverRecord>& record_list) : total_cost_of_leftovers_(0.0) { 
+    // --------- variable & map container declarations -----------
+    std::unordered_map<std::string, int> name_count;
     int name_max = 1;
-    std::string name = ""; // name holder 
+    int name_max_count = 1;
+    std::string name_key = "";
+    std::unordered_map<std::string, double> meal_cost;
+    double meal_max = 0.0;
+    int meal_max_count = 1;
+    std::string meal_key = "";
+    std::unordered_map<std::string, int> reason_count;
     int reason_max = 1;
-    std::string reason = ""; // reason holder 
+    int reason_max_count = 1;
+    std::string reason_key = "";
+    std::unorderd_map<std::string, int> disposal_count;
     int disposal_max = 1;
-    std::string disposal = ""; // disposal mech holder 
-    std::unordered_map<std::string, int> counter_map; 
-    std::unordered_map<std::string, double> meal_cost_map;
+    int disposal_max_count = 1;
+    std::string disposal_key = ""; 
 
     // ======================================================= 
-    //    compute values into all object variables
+    //  compute values into all object variables
     // ========================================================
     for(int i = 0; i < record_list.size(); i++) {
       LeftoverRecord record = record_list[i];
-      // 1. count/store occurence(s) of leftover name 
-      counter_map[record.GetName()]++; // name-count
-      // if new max for name count is found 
-      if((i > 0) && counter_map[record.GetName()] > name_max) {
-       // ensure container is empty 
-        if(!most_common_leftover_names_.empty()) {
-          most_common_leftover_names_.clear();
+      // -------- for most_common_leftover_names_ ---------
+      name_count[record.GetName()]++; // count
+      // put food with most count in most_common_leftover_names
+      if(name_count[record.GetName()] > name_max) { // found  new max
+        if(most_common_leftover_names_.empty()) { // & container empty
+          most_common_leftover_names_.push_back(record.GetName()); // push
         }
-        name_max = counter_map[record.GetName()]; // note the max count
-        name = record.GetName(); // note corresponding name
-        // TODO: avoid duplicate name entries
-        most_common_leftover_names_.push_back(name); // contain the name
+        most_common_leftover_names_.erase(); // else, erase container first
+        most_common_leftover_names_.push_back(record.GetName()); // push   
+        name_max = name_count[record.GetName()]; // & record new max
+      } else if(name_count[record.GetName()] == name_max && name_max > 1) {
+        most_common_leftover_names_.push_back(record.GetName()); // push
       }
-      // if another leftover name shares max count, contain it too
-      if(name_max > 1 && (name_max == counter_map[record.GetName()])) {
-        most_common_leftover_names_.push_back(record.GetName());
-      } 
 
-      // 2. add up cost of meals & contain the corresponding meals. 
-      meal_cost_map[record.GetMeal()] += record.GetCost(); // meal-cost 
-      if(meal_cost_map[record.GetMeal()] > cost_max) { // DONE
-        // ensure container is empty
-        if(!most_costly_leftover_producing_meals_.empty()) {
-          most_costly_leftover_producing_meals_.clear();
+      // ---------- for most_costly_leftover_producing_meals_ ---------
+      meal_cost[record.GetMeal()] += record.GetCost(); // count
+      // put meal wit most count in  most_constly_leftover_producing_meals_
+      if(meal_cost[record.GetMeal()] > meal_max) {
+        if(most_costly_leftover_producing_meals_.empty()) {
+          most_costly_leftover_producing_meals_.push_back(record.GetMeal());
         }
-        cost_max = meal_cost_map[record.GetMeal()]; // note the max
-        most_costly_meal = record.GetMeal(); // note corresponding meal
-        most_costly_leftover_producing_meals_.push_back(most_costly_meal); 
-      }
-      // if another meal shares max cost, contain it too
-      if(cost_max > 0 && cost_max == meal_cost_map[record.GetMeal()]) {
+        most_costly_leftover_producing_meals_.erase();
+        most_costly_leftover_producing_meals_.push_back(record.GetMeal());
+        meal_max = meal_cost[record.GetMeal()];
+      } else if(meal_cost[record.GetMeal()] == meal_max) {
         most_costly_leftover_producing_meals_.push_back(record.GetMeal());
       }
-
-      // 3. add up all the cost to total_cost_of_leftovers. // DONE 
-      total_cost_of_leftovers_ += record.GetCost(); 
       
-      // 4. count reason frequency; get most common leftover reason 
-      counter_map[record.GetReason()]++; // count each reason
-      if(counter_map[record.GetReason()] > reason_max) { // reason-count
-        // ensrure container is empty
-        if(!most_common_leftover_reasons_.empty()) { // DONE
-          most_common_leftover_reasons_.clear();
+      // --------- for total_cost_of_leftovers_ ----------
+      total_cost_of_leftovers_ += record.GetCost();
+
+      // ----------- for most_common_leftover_reasons_ ----------
+      reason_count[record.GetReason()]++;
+      // determin key for most common leftover reason
+      if(reason_count[record.GetReason()] > reason_max) {
+        if(most_common_leftover_reasons_.empty()) {
+          most_common_leftover_reasons_.push_back(record.GetReason());
         }
-        reason_max = counter_map[record.GetReason()]; // note the max
-        reason = record.GetReason(); // note corresponding reason
-        most_common_leftover_reasons_.push_back(reason); // contain reason
-      }
-      // if another reason shares reason_max, contain it too
-      if(reason_max > 1 && reason_max == counter_map[record.GetReason()]) {
+        most_common_leftover_reasons_.erase();
+        most_common_leftover_reasons_.push_back(record.GetReason());
+        reason_max = reason_count[record.GetReason()];
+      } else if(reason_count[record.GetReason()] == reason_max) {
         most_common_leftover_reasons_.push_back(record.GetReason());
       }
       
-      // 5. get max disp mech frequency; contain its dip mech
-      counter_map[record.GetDisposalMechanism()]++; // count disp mech
-      if(counter_map[record.GetDisposalMechanism()] > disposal_max) {
-        // ensure container is empty
-        if(!most_common_disposal_mechanisms_.empty()) { // DONE
-          most_common_disposal_mechanisms_.clear();
-        }
-        disposal_max = counter_map[record.GetDisposalMechanism()];
-        disposal = record.GetDisposalMechanism(); // note disposal mech
-        most_common_disposal_mechanisms_.push_back(disposal); // contain it
-      }
-      // if another disposal shares disposal_max, contain it too
-      if(disposal_max > 1 && disposal_max == counter_map[record.GetDisposalMechanism()]) {
-        most_common_disposal_mechanisms_.push_back(record.GetDisposalMechanism());
-      } 
+      // ----------- for most_common_disposal_mechanisms_ -----------
+      disposal_count[record.GetDisposalMechanism()]++;
+     // determine key for most common disposal mechanism
+     if(disposal_count[record.GetDisposalMechanism()] > disposal_max) {
+       if(most_common_disposal_mechanisms_.empty()) {
+          most_common_disposal_mechanisms_.push_back(record.GetDisposalMechanism());
+       }
+       most_common_disposal_mechanisms_.erase();
+       most_common_disposal_mechanisms_.push_back(record.GetDisposalMechanism());
+       disposal_max = disposal_count[record.GetDisposalMechanism()]; 
+     } 
     } // end of 1st for-loop 
     
-    // determine strategies & put them in the right container.
+    // --------- for suggested_strategies_to_reduce_leftovers_ ---------
     for(const std::string& reason: most_common_leftover_reasons_) {
       if(reason != "Expired" && std::find(suggested_strategies_to_reduce_leftovers_.begin(), suggested_strategies_to_reduce_leftovers_.end(), reason) == suggested_strategies_to_reduce_leftovers_.end()) { // 4. reason != "Expired"
         suggested_strategies_to_reduce_leftovers_.push_back("Recycle left overs"); 
@@ -133,6 +127,21 @@ public:
     } // end of 2nd for-loop
   } // end of non-default constructor
   
+  // TODO: helper function for putting values with max count in containers
+  /* template<typename S, typename i>
+  void FillVectors(const std::unordered_map<S, i>& map, int max, std::vector<S>& container) {
+    if(map[record.GetReason()] > reason_max) {
+        if(most_common_leftover_reasons_.empty()) {
+          most_common_leftover_reasons_.push_back(record.GetReason());
+        }
+        most_common_leftover_reasons_.erase();
+        most_common_leftover_reasons_.push_back(record.GetReason());
+        reason_max = reason_count[record.GetReason()];
+      } else if(reason_count[record.GetReason()] == reason_max) {
+        most_common_leftover_reasons_.push_back(record.GetReason());
+      }
+  } */
+
   // ======================================================
   // Precondition: User has created a leftover record
   // Postcondition: Returns most common leftover name(s)
