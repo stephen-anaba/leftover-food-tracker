@@ -32,16 +32,16 @@ public:
   LeftoverReport(const std::vector<LeftoverRecord>& record_list) : total_cost_of_leftovers_(0.0) { 
     // --------- variable & map container declarations -----------
     std::unordered_map<std::string, int> name_count;
-    int name_max = 1;
+    int name_max = 0;
     std::string name_key = "";
     std::unordered_map<std::string, double> meal_cost;
     double meal_max = 0.0;
     std::string meal_key = "";
     std::unordered_map<std::string, int> reason_count;
-    int reason_max = 1;
+    int reason_max = 0;
     std::string reason_key = "";
     std::unordered_map<std::string, int> disposal_count;
-    int disposal_max = 1;
+    int disposal_max = 0;
     std::string disposal_key = ""; 
 
     // =========================================== 
