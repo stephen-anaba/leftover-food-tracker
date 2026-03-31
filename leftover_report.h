@@ -65,12 +65,12 @@ public:
       meal_cost_map[record.GetMeal()] += record.GetCost(); // count
       // put meal wit most count in  most_constly_leftover_producing_meals_
       if(meal_cost_map[record.GetMeal()] > meal_max) {
-        if(most_costly_leftover_producing_meals_.empty()) {
-          most_costly_leftover_producing_meals_.push_back(record.GetMeal());
+        // ensure member object container is empty & put record.meal in it
+        if(!most_costly_leftover_producing_meals_.empty()) { 
+          most_costly_leftover_producing_meals_.clear();
         }
-        most_costly_leftover_producing_meals_.clear();
-        most_costly_leftover_producing_meals_.push_back(record.GetMeal());
-        meal_max = meal_cost_map[record.GetMeal()];
+        most_costly_leftover_producing_meals_.push_back(record.GetMeal()); 
+        meal_max = meal_cost_map[record.GetMeal()]; // reset meal_max
       } else if(meal_cost_map[record.GetMeal()] == meal_max) {
         most_costly_leftover_producing_meals_.push_back(record.GetMeal());
       }
