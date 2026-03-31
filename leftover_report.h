@@ -35,7 +35,7 @@ public:
     int name_max = 0;
     std::string name_key = "";
     std::unordered_map<std::string, double> meal_cost_map;
-    double meal_max = 0.0;
+    double meal_max = 0;
     std::string meal_key = "";
     std::unordered_map<std::string, int> reason_count_map;
     int reason_max = 1;
@@ -61,21 +61,24 @@ public:
       } else if(name_count_map[record.GetName()] == name_max && name_max > 1) {
         most_common_leftover_names_.push_back(record.GetName()); // push
       }
+      // --------- for total_cost_of_leftovers_ ----------
+      total_cost_of_leftovers_ += record.GetCost();
       // ---------- for most_costly_leftover_producing_meals_ ---------
-      meal_cost_map[record.GetMeal()] += record.GetCost(); // count
+      meal_cost_map[record.GetMeal()] += record.GetCost(); // sum cost
       // put meal wit most count in  most_constly_leftover_producing_meals_
       if(meal_cost_map[record.GetMeal()] > meal_max) {
         // ensure member object container is empty & put record.meal in it
-        if(!most_costly_leftover_producing_meals_.empty()) { 
+        if(most_costly_leftover_producing_meals_.empty()) { 
+          most_costly_leftover_producing_meals_.push_back(record.GetMeal());     
+        } else {
           most_costly_leftover_producing_meals_.clear();
+          most_costly_leftover_producing_meals_.push_back(record.GetMeal());
+          meal_max = meal_cost_map[record.GetMeal()]; // reset meal_max
         }
-        most_costly_leftover_producing_meals_.push_back(record.GetMeal()); 
-        meal_max = meal_cost_map[record.GetMeal()]; // reset meal_max
+        
       } else if(meal_cost_map[record.GetMeal()] == meal_max) {
         most_costly_leftover_producing_meals_.push_back(record.GetMeal());
-      }
-      // --------- for total_cost_of_leftovers_ ----------
-      total_cost_of_leftovers_ += record.GetCost();
+      } 
       // ----------- for most_common_leftover_reasons_ ----------
       reason_count_map[record.GetReason()]++;
       // determin key for most common leftover reason
