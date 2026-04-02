@@ -63,6 +63,7 @@ public:
         most_common_leftover_names_.push_back(record.GetName()); // push
       } 
       // TODO: FIX---------- for most_costly_leftover_producing_meals_ ---------
+      // ISSUE: record.GetMeal() not entered  in meal_cost_map.
       meal_cost_map[record.GetMeal()] += record.GetCost(); // sum cost
       std::cout << record.GetCost() << " added for " << record.GetMeal() << "\n"; // remove
       // put meal wit most count in  most_constly_leftover_producing_meals_
@@ -109,6 +110,8 @@ public:
         most_common_disposal_mechanisms_.push_back(record.GetDisposalMechanism());
      } 
     } // end of 1st for-loop 
+
+    std::cout << "meal_cost_map.size() = " << meal_cost_map.size() << "\n"; // remove
     
     // --------- for suggested_strategies_to_reduce_leftovers_ ---------
     for(const std::string& reason: most_common_leftover_reasons_) {
