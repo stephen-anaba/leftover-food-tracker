@@ -11,6 +11,7 @@
 #include <vector> // for vector containers
 #include <unordered_map> // for frequency lookups
 #include <algorithm>
+#include <iostream> // remove
 
 class LeftoverReport {
 private:
@@ -60,11 +61,10 @@ public:
         name_max = name_count_map[record.GetName()]; // & record new max
       } else if(name_count_map[record.GetName()] == name_max && name_max > 1) {
         most_common_leftover_names_.push_back(record.GetName()); // push
-      }
-      // --------- for total_cost_of_leftovers_ ----------
-      total_cost_of_leftovers_ += record.GetCost();
-      // ---------- for most_costly_leftover_producing_meals_ ---------
+      } 
+      // TODO: FIX---------- for most_costly_leftover_producing_meals_ ---------
       meal_cost_map[record.GetMeal()] += record.GetCost(); // sum cost
+      std::cout << record.GetCost() << " added for " << record.GetMeal() << "\n"; // remove
       // put meal wit most count in  most_constly_leftover_producing_meals_
       if(meal_cost_map[record.GetMeal()] > meal_max) {
         // ensure member object container is empty & put record.meal in it
@@ -78,7 +78,9 @@ public:
         
       } else if(meal_cost_map[record.GetMeal()] == meal_max) {
         most_costly_leftover_producing_meals_.push_back(record.GetMeal());
-      } 
+      }
+      // --------- for total_cost_of_leftovers_ ----------
+      total_cost_of_leftovers_ += record.GetCost(); 
       // ----------- for most_common_leftover_reasons_ ----------
       reason_count_map[record.GetReason()]++;
       // determin key for most common leftover reason
