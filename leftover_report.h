@@ -112,8 +112,8 @@ public:
      } 
     } // end of 1st for-loop 
 
-    std::cout << "meal_cost_map.size() = " << meal_cost_map.size() << "\n"; // remove
-    std::cout << "meal_cost_map contains: " << meal_cost_map.first << ": " << meal_cost_map.second << "\n"; // CONTINUE FROM HERE
+    // std::cout << "meal_cost_map.size() = " << meal_cost_map.size() << "\n"; // remove
+    //bstd::cout << "meal_cost_map contains: " << meal_cost_map.first << ": " << meal_cost_map.second << "\n"; // CONTINUE FROM HERE
    
     // --------- for suggested_strategies_to_reduce_leftovers_ ---------
     for(const std::string& reason: most_common_leftover_reasons_) {
