@@ -65,7 +65,7 @@ public:
       // TODO: FIX---------- for most_costly_leftover_producing_meals_ ---------
       // ISSUE: record.GetMeal() not entered  in meal_cost_map.
       meal_cost_map[record.GetMeal()] += record.GetCost(); // sum cost
-      std::cout << record.GetCost() << " added for " << record.GetMeal() << "\n"; // remove
+      std::cout << record.GetCost() << " added for " << record.GetMeal() << "\n"; // remove - << 136 >>
       // put meal wit most count in  most_constly_leftover_producing_meals_
       if(meal_cost_map[record.GetMeal()] > meal_max) {
         // ensure member object container is empty & put record.meal in it
@@ -81,6 +81,9 @@ public:
       } else if(meal_cost_map[record.GetMeal()] == meal_max) {
         most_costly_leftover_producing_meals_.push_back(record.GetMeal());
       }
+      // printing for bug fix : << 136 >>
+      PrintVec(most_costly_leftover_producing_meals_); // remove
+      PrintMap(meal_cost_map); // remove
       // --------- for total_cost_of_leftovers_ ----------
       total_cost_of_leftovers_ += record.GetCost(); 
       // ----------- for most_common_leftover_reasons_ ----------
@@ -112,8 +115,10 @@ public:
      } 
     } // end of 1st for-loop 
 
-    // std::cout << "meal_cost_map.size() = " << meal_cost_map.size() << "\n"; // remove
-    //bstd::cout << "meal_cost_map contains: " << meal_cost_map.first << ": " << meal_cost_map.second << "\n"; // CONTINUE FROM HERE
+    std::cout << "most_costly_leftover_producing_meal.size() = " << most_costly_leftover_producing_meals_.size() << "\n";
+    std::cout << "meal_cost_map.size() = " << meal_cost_map.size() << "\n"; // remove
+    PrintMap(meal_cost_map); // print meal_cost_map - remove
+    PrintVec(most_costly_leftover_producing_meals_); // print most_costly_leftover_producing_meal - remove
    
     // --------- for suggested_strategies_to_reduce_leftovers_ ---------
     for(const std::string& reason: most_common_leftover_reasons_) {
@@ -130,7 +135,29 @@ public:
       }
     } // end of 2nd for-loop
   } // end of non-default constructor
-  
+ 
+  // -------------------------------------------------------------
+  //  PRINT MAP AND VECTOR FOR TROUBLESHOOTING : << 84 >>
+      // printMealCostMap(); // print meal_cost_map - map
+      void PrintMap(const std::unordered_map<std::string, double>& map) const { 
+        std::cout << "Printing meal_cost_map:\n";
+        for(const auto& [key, val] : map) {  
+          std::cout << "\t" << key << ": " << val << "\n";
+        }
+        std::cout << "\n";
+      }
+
+      // print most_costly_leftover_producing_meal - vector
+      void PrintVec(const std::vector<std::string>& vec) const {
+        std::cout << "Printing most_costly_leftover_producing_meal\n";  
+        for(const auto& v : vec) {
+          std::cout << "\t" << v << ", ";
+        }
+        std::cout << "\n";
+      }
+      
+  // -------------------------------------------------------------
+
   // TODO: helper function for putting values with max count in containers
   /* template<typename S, typename i>
   void FillVectors(const std::unordered_map<S, i>& map, int max, std::vector<S>& container) {
