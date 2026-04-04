@@ -69,10 +69,11 @@ public:
       // put meal wit most count in  most_constly_leftover_producing_meals_
       if(meal_cost_map[record.GetMeal()] > meal_max) {
         // ensure member object container is empty & put record.meal in it
-        if(most_costly_leftover_producing_meals_.empty()) { 
-          most_costly_leftover_producing_meals_.push_back(record.GetMeal());     
-        } else {
+        if(!most_costly_leftover_producing_meals_.empty()) { 
+          //bmost_costly_leftover_producing_meals_.push_back(record.GetMeal());     
           most_costly_leftover_producing_meals_.clear();
+        } else {
+          // most_costly_leftover_producing_meals_.clear();
           most_costly_leftover_producing_meals_.push_back(record.GetMeal());
           meal_max = meal_cost_map[record.GetMeal()]; // reset meal_max
         }
@@ -112,7 +113,8 @@ public:
     } // end of 1st for-loop 
 
     std::cout << "meal_cost_map.size() = " << meal_cost_map.size() << "\n"; // remove
-    
+    std::cout << "meal_cost_map contains: " << meal_cost_map.first << ": " << meal_cost_map.second << "\n"; // CONTINUE FROM HERE
+   
     // --------- for suggested_strategies_to_reduce_leftovers_ ---------
     for(const std::string& reason: most_common_leftover_reasons_) {
       if(reason != "Expired" && std::find(suggested_strategies_to_reduce_leftovers_.begin(), suggested_strategies_to_reduce_leftovers_.end(), reason) == suggested_strategies_to_reduce_leftovers_.end()) { // 4. reason != "Expired"
