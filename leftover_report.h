@@ -72,11 +72,10 @@ public:
         if(!most_costly_leftover_producing_meals_.empty()) { 
           //bmost_costly_leftover_producing_meals_.push_back(record.GetMeal());     
           most_costly_leftover_producing_meals_.clear();
-        } else {
-          // most_costly_leftover_producing_meals_.clear();
-          most_costly_leftover_producing_meals_.push_back(record.GetMeal());
-          meal_max = meal_cost_map[record.GetMeal()]; // reset meal_max
         }
+        // most_costly_leftover_producing_meals_.clear();
+        most_costly_leftover_producing_meals_.push_back(record.GetMeal());
+        meal_max = meal_cost_map[record.GetMeal()]; // reset meal_max
         
       } else if(meal_cost_map[record.GetMeal()] == meal_max) {
         most_costly_leftover_producing_meals_.push_back(record.GetMeal());
