@@ -13,6 +13,23 @@
 #include <algorithm>
 #include <iostream> // remove
 
+// ================== TODO ===================
+// 1. Write/use helper functions/generic helpers using following pattern:
+//    if(map[key] > max) {
+//      container.push_back(...)
+//    }
+//    container.clear()
+//    container.push_back(...)
+//    max = ... // update max
+// 2. Use consistent patterns: clear(), empty(), max, etc
+// 3. Implement separation of concerns
+// 4. Don't update map, vector & max inside the loop all at once to 
+//    avoid tight coupling & difficult debugging
+// 5. Separate computation from construction. Use a void function to do the
+//    computation & call it in the constructor. Easy to test/debug/reuse
+// 6. Move PrintMap & PrintVec to a debug utility or test layer
+// ===========================================
+
 class LeftoverReport {
 private:
   // collection of all leftover record from memory
@@ -65,9 +82,21 @@ public:
       // TODO: FIX---------- for most_costly_leftover_producing_meals_ ---------
       // ISSUE: record.GetMeal() not entered  in meal_cost_map.
       meal_cost_map[record.GetMeal()] += record.GetCost(); // sum cost
-      std::cout << record.GetCost() << " added for " << record.GetMeal() << "\n"; // remove - << 136 >>
+      // std::cout << record.GetCost() << " added for " << record.GetMeal() << "\n"; // remove - << 136 >>
+      if(meal_cost_map[record.GetMeal()] > meal_max) { // found  new max
+        if(most_costly_leftover_producing_meals_.empty()) { // & container empty
+          most_costly_leftover_producing_meals_.push_back(record.GetMeal());
+        }
+        most_costly_leftover_producing_meals_.clear();
+        most_costly_leftover_producing_meals_.push_back(record.GetMeal());   
+        meal_max = meal_cost_map[record.GetName()]; // & record new max
+      } else if(meal_cost_map[record.GetMeal()] == meal_max /*&& meal_max > 1*/) {
+        most_costly_leftover_producing_meals_.push_back(record.GetMeal());
+      }
+
+      // ------------------------------------------------------------------
       // put meal wit most count in  most_constly_leftover_producing_meals_
-      if(meal_cost_map[record.GetMeal()] > meal_max) {
+      /*if(meal_cost_map[record.GetMeal()] > meal_max) {
         // ensure member object container is empty & put record.meal in it
         if(!most_costly_leftover_producing_meals_.empty()) { 
           //bmost_costly_leftover_producing_meals_.push_back(record.GetMeal());     
@@ -82,7 +111,9 @@ public:
       }
       // printing for bug fix : << 136 >>
       PrintVec(most_costly_leftover_producing_meals_); // remove
-      PrintMap(meal_cost_map); // remove
+      PrintMap(meal_cost_map);*/ // remove -----------------------------------
+      
+      
       // --------- for total_cost_of_leftovers_ ----------
       total_cost_of_leftovers_ += record.GetCost(); 
       // ----------- for most_common_leftover_reasons_ ----------
