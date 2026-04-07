@@ -33,9 +33,7 @@
 
 class LeftoverReport {
 private:
-  // collection of all leftover record from memory
-  // std::vector<LeftoverRecord> record_list_;
-  // computed values to be used to prepare leftover report
+  // private member objects 
   std::vector<std::string> most_common_leftover_names_;
   std::vector<std::string> most_costly_leftover_producing_meals_;
   double total_cost_of_leftovers_;
@@ -149,8 +147,9 @@ public:
     }*/ // end of 2nd for-loop
   } // end of non-default constructor
 
-
+  // =======================================
   // Postcondition: fills up member objects
+  // =======================================
   void FillObjects(const std::vector<LeftoverRecord>& records) {
     // variables and maps
     std::unordered_map<std::string, int> name_count_map;
@@ -164,112 +163,125 @@ public:
     
     for(const auto& record : records) { 
       // Compute values into member object containers:
-      CountHelper(name_count_map, most_common_leftover_names_, record.GetName(), 1, name_max); // 1
+      CountHelper(name_count_map, most_common_leftover_names_, \
+          record.GetName(), 1, name_max); // 1
       
       total_cost_of_leftovers_ += record.GetCost(); // 2. done
 
-      CountHelper(reason_count_map, most_common_leftover_reasons_, record.GetReason(), 1, reason_max); // 3.
+      CountHelper(reason_count_map, most_common_leftover_reasons_, \
+          record.GetReason(), 1, reason_max); // 3.
 
-      CountHelper(disposal_count_map, most_common_disposal_mechanisms_, record.GetDisposalMechanism(), 1, disposal_max); // 4. 
+      CountHelper(disposal_count_map, most_common_disposal_mechanisms_, \
+          record.GetDisposalMechanism(), 1, disposal_max); // 4. 
     
-      CountHelper(meal_cost_map, most_costly_leftover_producing_meals_, record.GetMeal(), record.GetCost(), meal_max); // 5.
-      // Strategies(); // 6. Compute strategies
+      CountHelper(meal_cost_map, most_costly_leftover_producing_meals_, \
+          record.GetMeal(), record.GetCost(), meal_max); // 5. 
     } // end of for-loop 
   } // end of FillObjects
 
-  // Postcondition: helper function for FillObjects
-  template<typename T>
-  void CountHelper(std::unordered_map<std::string, T>& map, std::vector<std::string>& container, const std::string& key, const T increment, T& max) {
-    if(std::is_same_v<T, double>) { // double
-      std::cout << "A. (" << increment << " & " << max << " are doubles):\n"; // remove
+    // ===================================================
+    // Postcondition: helper function for FillObjects
+    // ===================================================
+    template<typename T>
+    void CountHelper(std::unordered_map<std::string, T>& map,\
+        std::vector<std::string>& container, const std::string& key,\
+        const T increment, T& max) {
+    // ------------------ when max is double ----------------
+    if(std::is_same_v<T, double>) { 
+      std::cout << "A. (" << increment << " & " << max 
+        << " are doubles):\n"; // remove
       if(map[key] > max) {
-        std::cout << "\t(map[" << key << "] > " << max << "):\n"; // remove
+        std::cout << "\tA1. (map[" << key << "] > " << max << "):\n"; // remove
         map[key] += increment;
-        std::cout << "\t\tmap[" << key << "] += " << increment << "\n"; // remove
-        std::cout << "\t\tmax[" << key << " = " << map[key] << "\n"; // remove
+        std::cout << "\t\tA1a. map[" << key << "] += " 
+          << increment << "\n"; // remove
+        std::cout << "\t\tA1b. max[" << key << " = " << map[key] \
+          << "\n"; // remove
         max = map[key];
         if(!container.empty()) {
-          std::cout << "\t\tcontainer NOT empty, so cleared\n";
+          std::cout << "\t\tA1c. container NOT empty, so cleared\n";
           container.clear();
         }
         container.push_back(key);
-        std::cout << "\t\tAfter push, container.size = " << container.size() << "\n"; //remove
+        std::cout << "\t\tA1d. After push, container.size = " 
+          << container.size() << "\n"; //remove
 
-        PrintVec(container); // remove
+        std::cout << "\t\tA1e. "; PrintVec(container); // remove
       } else if(map[key] == max) {
-        std::cout << "\t(map[" << key << "] == " << max << "):\n"; // remove
+        std::cout << "\tA2a. (map[" << key << "] == " 
+          << max << "):\n"; // remove
         container.push_back(key);
-        std::cout << "\t\tAfter push, container.size = " << container.size() << "\n"; // remove
-                                                                                      PrintVec(container); // remove 
+        std::cout << "\t\tA2b. After push, container.size = " 
+          << container.size() << "\n"; // remove
+        std::cout << "\t\tA2c. "; PrintVec(container); // remove 
       }
-    } else { // int
-      std::cout << "B. (" <<increment<< " & " <<max<< " are integers):\n"; //remove
+    } else { // ------------------ when max is integer ---------------- 
+      std::cout << "B1a. (" <<increment<< " & " << max 
+        << " are integers):\n"; //remove
       if(map[key] > max) {
-        std::cout << "\t(map[" << key << "] > "<< max << "):\n"; // remove
-        std::cout << "\t\tmap[" << key << "] ++\n"; // remove
+        std::cout << "\tB1b. (map[" << key << "] > "<< max << "):\n"; // remove
+        std::cout << "\t\tB1c. map[" << key << "] ++\n"; // remove
         map[key]++;
-        std::cout << "\t\tmax = " << map[key] << "\n"; // remove
+        std::cout << "\t\tB1d. max = " << map[key] << "\n"; // remove
         max = map[key];
         if(!container.empty()) container.clear();
         container.push_back(key);
-        std::cout << "\t\tAfter push, container.size = " << container.size() << "\n\n"; // remove
+        std::cout << "\t\tB1e. After push, container.size = " 
+          << container.size() << "\n\n"; // remove
                                                                                         PrintVec(container); // remove
       } else if(map[key] == max) {
-        std::cout << "\t(map[" << key << "] = " << max << "):\n"; // remove
+        std::cout << "\t(B2a. map[" << key << "] = " << max << "):\n"; // remove
         container.push_back(key);
-        std::cout << "\t\tAfter push, container.size = " << container.size() << "\n\n"; // remove
-                                                                                        PrintVec(container); // remove
+        std::cout << "\t\tB2b. After push, container.size = " 
+          << container.size() << "\n\n"; // remove
+        std::cout << "\t\tB2c. "; PrintVec(container); // remove
       }
-    }
-    
-    // execute block only when max is ...
-    /*if(std::is_same<T, double>::value && map[key] > max) { // ... double
-      map[key] += increment;
-      max = map[key];
-      if(!container.empty()) container.clear();
-      container.push_back(key); 
-    } else if(floor(max) != ceil(max) && map[key] > max) { // ... int
-      map[key]++;
-      max = map[key];
-      if(!container.empty()) container.clear();
-      container.push_back(key); 
-    } else if(floor(max) != ceil(max) && map[key] == max) {
-      //
-    } */ 
-
+    } // end of if-else statements
   } // end of CountHelper() 
 
+  // ====================================================================
   // Postcondition: determines suggested_strategies_to_reduce_leftovers_
+  // ====================================================================
   void Strategies() {
     for(const std::string& reason: most_common_leftover_reasons_) {
-      if(reason != "Expired" && std::find(suggested_strategies_to_reduce_leftovers_.begin(), suggested_strategies_to_reduce_leftovers_.end(), reason) == suggested_strategies_to_reduce_leftovers_.end()) { // 4. reason != "Expired"
-        suggested_strategies_to_reduce_leftovers_.push_back("Recycle left overs"); 
+      if(reason != "Expired" &&
+          std::find(suggested_strategies_to_reduce_leftovers_.begin(),
+            suggested_strategies_to_reduce_leftovers_.end(), 
+            reason) == suggested_strategies_to_reduce_leftovers_.end()) { 
+        suggested_strategies_to_reduce_leftovers_.\
+          push_back("Recycle left overs"); 
       }
       if(reason == "Expired") { // 1. reason == "Expired"
-        suggested_strategies_to_reduce_leftovers_.push_back("Donate before expiration");
+        suggested_strategies_to_reduce_leftovers_.\
+          push_back("Donate before expiration");
       } else if (reason == "Tastes bad") { // 2. reasn == "Tasted bad"
         suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
       } else if(reason == "Too much leftovers") { // 3. "2much leftovers"
         suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
-        suggested_strategies_to_reduce_leftovers_.push_back("Cook small servings");
+        suggested_strategies_to_reduce_leftovers_.\
+          push_back("Cook small servings");
       }
     }
   }
   
-  // -------------------------------------------------------------
-  //  PRINT MAP AND VECTOR FOR TROUBLESHOOTING : << 84 >>
-      // printMealCostMap(); // print meal_cost_map - map
-      void PrintMap(const std::unordered_map<std::string, double>& map) const { 
-        std::cout << "Printing meal_cost_map:\n";
+      // =========================================================
+      //  Postcondition: prints std::unorderd_map<std::string, T>
+      // =========================================================
+      template<typename T>
+      void PrintMap(const std::unordered_map<std::string, T>& map) const { 
+        std::cout << "Printing map:\n";
         for(const auto& [key, val] : map) {  
           std::cout << "\t" << key << ": " << val << "\n";
         }
         std::cout << "\n";
       }
 
+      // ================================================
+      //  Postcondition: prints std::vector<std::string>
+      // ================================================
       // print most_costly_leftover_producing_meal - vector
       void PrintVec(const std::vector<std::string>& vec) const {
-        std::cout << "Printing most_costly_leftover_producing_meal\n";  
+        std::cout << "Printing vec-container:\n";  
         for(const auto& v : vec) {
           std::cout << "\t" << v << ", ";
         }
