@@ -180,23 +180,38 @@ public:
   // Postcondition: helper function for FillObjects
   template<typename T>
   void CountHelper(std::unordered_map<std::string, T>& map, std::vector<std::string>& container, const std::string& key, const T increment, T& max) {
-    if(std::is_same<T, double>::value) { // double
+    if(std::is_same_v<T, double>) { // double
+      std::cout << "(" << increment << " & " << max << " are doubles):\n"; // remove
       if(map[key] > max) {
+        std::cout << "\t(" << map[key] << " > " << max << "):\n"; // remove
         map[key] += increment;
+        std::cout << "\t\tmap[" << key << "] += " << increment << "\n"; // remove
+        std::cout << "\t\tmax = " << map[key] << "\n"; // remove
         max = map[key];
         if(!container.empty()) container.clear();
         container.push_back(key);
+        std::cout << "\t\tAfter push, container.size = " << container.size() << "\n"; //remove
       } else if(map[key] == max) {
+        std::cout << "\t(" << map[key] << " == " << max << ")\n"; // remove
         container.push_back(key);
+        std::cout << "\t\tAfter push, container.size = " << container.size() << "\n"; // remove 
       }
     } else { // int
+      std::cout << "(" <<increment<< " & " <<max<< " are integers\n"; //remove
       if(map[key] > max) {
+        std::cout << "\t(" << map[key] << " > "<< max << "):\n"; // remove
+        std::cout << "\t\t" << map[key] << " ++\n"; // remove
+        std::cout << "\t\t" << map[key] << " ++\n"; // remove
         map[key]++;
+        std::cout << "\t\tmax = " << map[key] << "\n"; // remove
         max = map[key];
         if(!container.empty()) container.clear();
         container.push_back(key);
+        std::cout << "\t\tAfter push, container.size = " << container.size() << "\n\n"; // remove
       } else if(map[key] == max) {
+        std::cout << "\t(" << map[key]<< " = " << max << ")\n"; // remove
         container.push_back(key);
+        std::cout << "\t\tAfter push, container.size = " << container.size() << "\n\n"; // remove
       }
     }
     
