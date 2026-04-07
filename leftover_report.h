@@ -11,7 +11,7 @@
 #include <vector> // for vector containers
 #include <unordered_map> // for frequency lookups
 #include <algorithm>
-#include <cmath> // to determine int or double data type
+#include <type_traits> // to determine int or double data type
 #include <iostream> // remove
 
 // ================== TODO ===================
@@ -180,18 +180,41 @@ public:
   // Postcondition: helper function for FillObjects
   template<typename T>
   void CountHelper(std::unordered_map<std::string, T>& map, std::vector<std::string>& container, const std::string& key, const T increment, T& max) {
-    // execute block only when max is an integer
-    if(floor(max) == ceil(max) && map[key] > max) { // when max is int
-      map[key]++;
-      max = map[key];
-      if(!container.empty()) container.clear();
-      container.push_back(key);
-    } else if(floor(max) != ceil(max) && map[key] > max) { // when max is double
+    if(std::is_same<T, double>::value) { // double
+      if(map[key] > max) {
+        map[key] += increment;
+        max = map[key];
+        if(!container.empty()) container.clear();
+        container.push_back(key);
+      } else if(map[key] == max) {
+        container.push_back(key);
+      }
+    } else { // int
+      if(map[key] > max) {
+        map[key]++;
+        max = map[key];
+        if(!container.empty()) container.clear();
+        container.push_back(key);
+      } else if(map[key] == max) {
+        container.push_back(key);
+      }
+    }
+    
+    // execute block only when max is ...
+    /*if(std::is_same<T, double>::value && map[key] > max) { // ... double
       map[key] += increment;
       max = map[key];
       if(!container.empty()) container.clear();
-      container.push_back(key);
-    } 
+      container.push_back(key); 
+    } else if(floor(max) != ceil(max) && map[key] > max) { // ... int
+      map[key]++;
+      max = map[key];
+      if(!container.empty()) container.clear();
+      container.push_back(key); 
+    } else if(floor(max) != ceil(max) && map[key] == max) {
+      //
+    } */ 
+
   } // end of CountHelper() 
 
   // Postcondition: determines suggested_strategies_to_reduce_leftovers_
@@ -210,13 +233,7 @@ public:
       }
     }
   }
-  //    if(map[key] > max) {
-  //      container.push_back(...)
-  //    }
-  //    container.clear()
-  //    container.push_back(...)
-  //    max = ... // update max
-
+  
   // -------------------------------------------------------------
   //  PRINT MAP AND VECTOR FOR TROUBLESHOOTING : << 84 >>
       // printMealCostMap(); // print meal_cost_map - map
