@@ -181,37 +181,44 @@ public:
   template<typename T>
   void CountHelper(std::unordered_map<std::string, T>& map, std::vector<std::string>& container, const std::string& key, const T increment, T& max) {
     if(std::is_same_v<T, double>) { // double
-      std::cout << "(" << increment << " & " << max << " are doubles):\n"; // remove
+      std::cout << "A. (" << increment << " & " << max << " are doubles):\n"; // remove
       if(map[key] > max) {
-        std::cout << "\t(" << map[key] << " > " << max << "):\n"; // remove
+        std::cout << "\t(map[" << key << "] > " << max << "):\n"; // remove
         map[key] += increment;
         std::cout << "\t\tmap[" << key << "] += " << increment << "\n"; // remove
-        std::cout << "\t\tmax = " << map[key] << "\n"; // remove
+        std::cout << "\t\tmax[" << key << " = " << map[key] << "\n"; // remove
         max = map[key];
-        if(!container.empty()) container.clear();
+        if(!container.empty()) {
+          std::cout << "\t\tcontainer NOT empty, so cleared\n";
+          container.clear();
+        }
         container.push_back(key);
         std::cout << "\t\tAfter push, container.size = " << container.size() << "\n"; //remove
+
+        PrintVec(container); // remove
       } else if(map[key] == max) {
-        std::cout << "\t(" << map[key] << " == " << max << ")\n"; // remove
+        std::cout << "\t(map[" << key << "] == " << max << "):\n"; // remove
         container.push_back(key);
-        std::cout << "\t\tAfter push, container.size = " << container.size() << "\n"; // remove 
+        std::cout << "\t\tAfter push, container.size = " << container.size() << "\n"; // remove
+                                                                                      PrintVec(container); // remove 
       }
     } else { // int
-      std::cout << "(" <<increment<< " & " <<max<< " are integers\n"; //remove
+      std::cout << "B. (" <<increment<< " & " <<max<< " are integers):\n"; //remove
       if(map[key] > max) {
-        std::cout << "\t(" << map[key] << " > "<< max << "):\n"; // remove
-        std::cout << "\t\t" << map[key] << " ++\n"; // remove
-        std::cout << "\t\t" << map[key] << " ++\n"; // remove
+        std::cout << "\t(map[" << key << "] > "<< max << "):\n"; // remove
+        std::cout << "\t\tmap[" << key << "] ++\n"; // remove
         map[key]++;
         std::cout << "\t\tmax = " << map[key] << "\n"; // remove
         max = map[key];
         if(!container.empty()) container.clear();
         container.push_back(key);
         std::cout << "\t\tAfter push, container.size = " << container.size() << "\n\n"; // remove
+                                                                                        PrintVec(container); // remove
       } else if(map[key] == max) {
-        std::cout << "\t(" << map[key]<< " = " << max << ")\n"; // remove
+        std::cout << "\t(map[" << key << "] = " << max << "):\n"; // remove
         container.push_back(key);
         std::cout << "\t\tAfter push, container.size = " << container.size() << "\n\n"; // remove
+                                                                                        PrintVec(container); // remove
       }
     }
     
