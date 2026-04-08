@@ -188,24 +188,25 @@ public:
         const T increment, T& max) {
     // ------------------ when max is double ----------------
     if(std::is_same_v<T, double>) { // if T is a double type 
-      map[key] += increment; // add cost to map[key]
-      if(map[key] > max) {  // & map[key] > max 
-        max = map[key];    // then max becomes map[key]
+      std::string temp = key;
+      map[temp] += increment; // add cost to map[key]
+      if(map[temp] > max) {  // & map[key] > max 
+        max = map[temp];    // then max becomes map[key]
         if(!container.empty()) { // if container is empty
           container.clear();    // then clear it
         }
-        container.push_back(key); // insert key
-      } else if(map[key] == max) { // but if map[key] == max
-        container.push_back(key); // just put key in container
+        container.push_back(temp); // insert key
+      } else if(map[temp] == max) { // but if map[key] == max
+        container.push_back(temp); // just put key in container
       }
     } else { // ------------------ when max is integer ---------------- 
-      map[key]++;
-      if(map[key] > max) { 
-        max = map[key];
-        if(!container.empty()) container.clear();
-        container.push_back(key); 
-      } else if(map[key] == max) {
-        container.push_back(key); 
+      map[key]++; // bfast:8, lunch:0, dinner:0 
+      if(map[key] > max) { //
+        max = map[key];   // 
+        if(!container.empty()) container.clear(); //
+        container.push_back(key); //
+      } else if(map[key] == max) { //
+        container.push_back(key); //
       }
     } // end of if-else statements
   } // end of CountHelper() 
