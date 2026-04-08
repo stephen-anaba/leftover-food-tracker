@@ -80,7 +80,6 @@ public:
     
       CountHelper(meal_cost_map, most_costly_leftover_producing_meals_, \
           record.GetMeal(), record.GetCost(), meal_max); // 5. 
-      std::cout << "Meal: [" << record.GetMeal() <<"]\n";
     } // end of for-loop 
   } // end of FillObjects
 
@@ -100,7 +99,7 @@ public:
           container.clear();    // then clear it
         }
         container.push_back(key); // insert key
-      } else if(map[key] == max) { // but if map[key] == max
+      } else if(map[key] == max && (std::find(container.begin(), container.end(), key) == container.end())) { 
         container.push_back(key); // just put key in container
       }
     } else { // ------------------ when max is integer ---------------- 
@@ -109,7 +108,7 @@ public:
         max = map[key];   // 
         if(!container.empty()) container.clear(); //
         container.push_back(key); //
-      } else if(map[key] == max) { //
+      } else if(map[key] == max && (std::find(container.begin(), container.end(), key) == container.end())) { //
         container.push_back(key); //
       }
     } // end of if-else statements
