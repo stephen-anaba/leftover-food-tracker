@@ -30,17 +30,17 @@ public:
   // else returns false. Avoids duplicate records 
   // ==================================================================
   bool AddRecord(const LeftoverRecord& new_record) { // DONE
-    // TESTING
+    // TODO: Fix bug here that fails to add record with different date
     for (const LeftoverRecord& existing_record : record_list_) {
         if (existing_record == new_record) {
-            std::cout << "Duplicate found:\n";
+            /*std::cout << "Duplicate found:\n";
             std::cout << "Existing date: " << existing_record.GetDate() << "\n";
-            std::cout << "New date: " << new_record.GetDate() << "\n";
+            std::cout << "New date: [" << new_record.GetDate() << "]\n";*/
             return false;
         }
     }
 
-    std::cout << "Adding record with date: " << new_record.GetDate() << "\n";
+    // std::cout << "Adding record with date: " << new_record.GetDate() << "\n";
     record_list_.push_back(new_record);
     return true; 
   } // end of AddRecord() 
