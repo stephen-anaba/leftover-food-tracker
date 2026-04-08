@@ -42,8 +42,8 @@ private:
   std::vector<std::string> suggested_strategies_to_reduce_leftovers_;
 
 public:
-  // default constructor
-  LeftoverReport() = default;
+  // initialize total_cost_of_leftovers_ to avoid segmentation fault
+  LeftoverReport() : total_cost_of_leftovers_(0.0) {}
   
   // ============= non-default constructor ==============
   LeftoverReport(const std::vector<LeftoverRecord>& record_list) : total_cost_of_leftovers_(0.0) { 
@@ -129,6 +129,12 @@ public:
   // ====================================================================
   void Strategies() {
     for(const std::string& reason: most_common_leftover_reasons_) {
+      // ensure most_common_leftover_reasons_ is not empty
+      if(most_common_leftover_reasons_.empty()) {
+        std::cout << "ERROR! most_common_leftover_reasons_ is empty\n";
+        // exit(1);
+      }
+      
       if(reason != "Expired" &&
           std::find(suggested_strategies_to_reduce_leftovers_.begin(),
             suggested_strategies_to_reduce_leftovers_.end(), 
