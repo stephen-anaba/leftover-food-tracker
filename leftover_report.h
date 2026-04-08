@@ -77,7 +77,11 @@ public:
 
       CountHelper(disposal_count_map, most_common_disposal_mechanisms_, \
           record.GetDisposalMechanism(), 1, disposal_max); // 4. 
-    
+      
+      // input validation to prevent logical errors
+      if(record.GetMeal().empty()) {
+        std::cout << "ERROR: meal is empty\n";
+      } 
       CountHelper(meal_cost_map, most_costly_leftover_producing_meals_, \
           record.GetMeal(), record.GetCost(), meal_max); // 5. 
     } // end of for-loop 

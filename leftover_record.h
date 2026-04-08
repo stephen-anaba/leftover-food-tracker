@@ -15,14 +15,14 @@ private:
   std::string date_;
   std::string meal_;
   std::string name_;
-  double quantity_;
+  double quantity_; // init in constructor to avoid segmentation fault
   std::string reason_;
   std::string disposal_mechanism_;
-  double cost_;
+  double cost_; // init in constructor to avoid segmentation fault
 
 public:
   // default constructor
-  LeftoverRecord() = default;
+  LeftoverRecord() : quantity_(0.0), cost_(0.0) {}
   
   // setters
   void SetDate(const std::string& date) { date_ = date; }
