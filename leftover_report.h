@@ -187,54 +187,25 @@ public:
         std::vector<std::string>& container, const std::string& key,\
         const T increment, T& max) {
     // ------------------ when max is double ----------------
-    if(std::is_same_v<T, double>) { 
-      std::cout << "A. (" << increment << " & " << max 
-        << " are doubles):\n"; // remove
-      if(map[key] > max) {
-        std::cout << "\tA1. (map[" << key << "] > " << max << "):\n"; // remove
-        map[key] += increment;
-        std::cout << "\t\tA1a. map[" << key << "] += " 
-          << increment << "\n"; // remove
-        std::cout << "\t\tA1b. max[" << key << " = " << map[key] \
-          << "\n"; // remove
-        max = map[key];
-        if(!container.empty()) {
-          std::cout << "\t\tA1c. container NOT empty, so cleared\n";
-          container.clear();
+    if(std::is_same_v<T, double>) { // if T is a double type 
+      map[key] += increment; // add cost to map[key]
+      if(map[key] > max) {  // & map[key] > max 
+        max = map[key];    // then max becomes map[key]
+        if(!container.empty()) { // if container is empty
+          container.clear();    // then clear it
         }
-        container.push_back(key);
-        std::cout << "\t\tA1d. After push, container.size = " 
-          << container.size() << "\n"; //remove
-
-        std::cout << "\t\tA1e. "; PrintVec(container); // remove
-      } else if(map[key] == max) {
-        std::cout << "\tA2a. (map[" << key << "] == " 
-          << max << "):\n"; // remove
-        container.push_back(key);
-        std::cout << "\t\tA2b. After push, container.size = " 
-          << container.size() << "\n"; // remove
-        std::cout << "\t\tA2c. "; PrintVec(container); // remove 
+        container.push_back(key); // insert key
+      } else if(map[key] == max) { // but if map[key] == max
+        container.push_back(key); // just put key in container
       }
     } else { // ------------------ when max is integer ---------------- 
-      std::cout << "B1a. (" <<increment<< " & " << max 
-        << " are integers):\n"; //remove
-      if(map[key] > max) {
-        std::cout << "\tB1b. (map[" << key << "] > "<< max << "):\n"; // remove
-        std::cout << "\t\tB1c. map[" << key << "] ++\n"; // remove
-        map[key]++;
-        std::cout << "\t\tB1d. max = " << map[key] << "\n"; // remove
+      map[key]++;
+      if(map[key] > max) { 
         max = map[key];
         if(!container.empty()) container.clear();
-        container.push_back(key);
-        std::cout << "\t\tB1e. After push, container.size = " 
-          << container.size() << "\n\n"; // remove
-                                                                                        PrintVec(container); // remove
+        container.push_back(key); 
       } else if(map[key] == max) {
-        std::cout << "\t(B2a. map[" << key << "] = " << max << "):\n"; // remove
-        container.push_back(key);
-        std::cout << "\t\tB2b. After push, container.size = " 
-          << container.size() << "\n\n"; // remove
-        std::cout << "\t\tB2c. "; PrintVec(container); // remove
+        container.push_back(key); 
       }
     } // end of if-else statements
   } // end of CountHelper() 
