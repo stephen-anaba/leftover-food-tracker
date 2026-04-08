@@ -30,16 +30,26 @@ public:
   // else returns false. Avoids duplicate records 
   // ==================================================================
   bool AddRecord(const LeftoverRecord& new_record) { // DONE
+    // input validation
+    if(new_record.GetDate().empty() || new_record.GetMeal().empty() || new_record.GetName().empty()) {
+      std::cout << "ERROR: Incomplete record\n";
+      return false;
+    }
+    
     // TODO: Fix bug here that fails to add record with different date
     for (const LeftoverRecord& existing_record : record_list_) {
         if (existing_record == new_record) {
-            /*std::cout << "Duplicate found:\n";
+            // remove print statements
+            std::cout << "Comparing records:\n";
             std::cout << "Existing date: " << existing_record.GetDate() << "\n";
-            std::cout << "New date: [" << new_record.GetDate() << "]\n";*/
-            return false;
+            std::cout << "New date: [" << new_record.GetDate() << "]\n";
+            
+            if(existing_record == new_record) {
+              std::cout << "Duplicate detected\n";
+              return false;
+            }
         }
     }
-
     // std::cout << "Adding record with date: " << new_record.GetDate() << "\n";
     record_list_.push_back(new_record);
     return true; 
