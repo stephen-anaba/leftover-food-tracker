@@ -86,6 +86,12 @@ public:
     // ===================================================
     // Postcondition: helper function for FillObjects
     // ===================================================
+    // TODO: 1. Avoid tight coupling in CountHelper() by coding UpdateMap() &
+    // TrackMax() so CountHelper only mutates result container
+    // 2. Just pass increment `map[key] += increment` instead of doing 
+    // `if(std::is_same_v<T, double>)` to avoid unnecessay type based branching
+    // 3. Decouple constructor cos its doing construction, computation,
+    // & business logic. Code Compute(records) for `report.Compute(records)`
     template<typename T>
     void CountHelper(std::unordered_map<std::string, T>& map,\
         std::vector<std::string>& container, const std::string& key,\
