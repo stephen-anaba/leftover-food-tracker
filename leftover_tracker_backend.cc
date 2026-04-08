@@ -258,7 +258,7 @@ LeftoverRecord QueryStringToLeftoverRecord(
   // TODO 1. Get the date from the query_string using
   // query_string.get(kWebDataDate), and set it in the `record` object using the
   // setter in LeftoverRecord class.
-  record.SetDate(query_string.get(kWebDataMeal)); // DONE
+  record.SetDate(query_string.get(kWebDataDate)); // DONE
 
   // TODO 2. Get the meal from the query_string using
   // query_string.get(kWebDataMeal), and set it in the `record` object using the
