@@ -39,10 +39,17 @@ public:
     // TODO: Fix bug here that fails to add record with different date
     for (const LeftoverRecord& existing_record : record_list_) {
         if (existing_record == new_record) {
-            // remove print statements
+            // remove debug print statements
             std::cout << "Comparing records:\n";
-            std::cout << "Existing date: " << existing_record.GetDate() << "\n";
-            std::cout << "New date: [" << new_record.GetDate() << "]\n";
+            std::cout << "Existing: " 
+                      << existing_record.GetDate() << ", "
+                      << existing_record.GetMeal() << ", "
+                      << existing_record.GetName() << "\n";
+
+            std::cout << "New: [" 
+                      << new_record.GetDate() << ", "
+                      << new_record.GetMeal() << ", "
+                      << new_record.GetName() << "]\n";
             
             if(existing_record == new_record) {
               std::cout << "Duplicate detected\n";
