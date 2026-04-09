@@ -160,7 +160,7 @@ public:
 
     // rule 4 (applies only if NOT Expired)
     if (reason != "Expired") {
-      suggested_strategies_to_reduce_leftovers_.push_back("Recycle leftovers");
+      suggested_strategies_to_reduce_leftovers_.push_back("Recycle left overs");
     }
   }
 
