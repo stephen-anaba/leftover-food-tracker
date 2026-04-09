@@ -47,6 +47,7 @@ public:
   
   // ============= non-default constructor ==============
   LeftoverReport(const std::vector<LeftoverRecord>& record_list) : total_cost_of_leftovers_(0.0) { 
+    if(record_list.empty()) return; // guard
     FillObjects(record_list);
     Strategies();
   } // end of non-default constructor
@@ -98,13 +99,7 @@ public:
     // ===================================================
     // Postcondition: helper function for FillObjects that tracks
     // key frequency & leaves only keys with max values in container
-    // ===================================================
-    // TODO: 1. Avoid tight coupling in CountHelper() by coding UpdateMap() &
-    // TrackMax() so CountHelper only mutates result container
-    // 2. Just pass increment `map[key] += increment` instead of doing 
-    // `if(std::is_same_v<T, double>)` to avoid unnecessay type based branching
-    // 3. Decouple constructor cos its doing construction, computation,
-    // & business logic. Code Compute(records) for `report.Compute(records)`
+    // =================================================== 
     template<typename T>
     void CountHelper(std::unordered_map<std::string, T>& map,\
         std::vector<std::string>& container, const std::string& key,\
@@ -122,7 +117,7 @@ public:
       } // std::find() is used to avoid duplicates in container 
   } // end of CountHelper() 
 
-
+  // ============ Helper enum for Strategies() ===========
     enum class Reason {
     Expired,
     TastesBad,
