@@ -142,26 +142,29 @@ public:
 
   for (const std::string& reason : most_common_leftover_reasons_) {
 
+    // rule 1
     if (reason == "Expired") {
       suggested_strategies_to_reduce_leftovers_.push_back("Donate before expiration");
     }
 
+    // rule 2
     if (reason == "Tastes bad") {
       suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
     }
 
-    if (reason == "Too much leftovers") {
+    // rule 3
+    if (reason == "Too much leftovers" || reason == "Too much left overs") {
       suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
       suggested_strategies_to_reduce_leftovers_.push_back("Cook small servings");
     }
 
-    // Optional fallback strategy
+    // rule 4 (applies only if NOT Expired)
     if (reason != "Expired") {
       suggested_strategies_to_reduce_leftovers_.push_back("Recycle leftovers");
     }
   }
 
-  // remove duplicates (IMPORTANT for tests)
+  // remove duplicates
   std::sort(suggested_strategies_to_reduce_leftovers_.begin(),
             suggested_strategies_to_reduce_leftovers_.end());
 
