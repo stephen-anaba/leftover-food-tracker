@@ -138,7 +138,40 @@ public:
   // Postcondition: determines suggested_strategies_to_reduce_leftovers_
   // ====================================================================
   void Strategies() {
-    for(const std::string& reason: most_common_leftover_reasons_) {
+    suggested_strategies_to_reduce_leftovers_.clear();
+
+  for (const std::string& reason : most_common_leftover_reasons_) {
+
+    if (reason == "Expired") {
+      suggested_strategies_to_reduce_leftovers_.push_back("Donate before expiration");
+    }
+
+    if (reason == "Tastes bad") {
+      suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
+    }
+
+    if (reason == "Too much leftovers") {
+      suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
+      suggested_strategies_to_reduce_leftovers_.push_back("Cook small servings");
+    }
+
+    // Optional fallback strategy
+    if (reason != "Expired") {
+      suggested_strategies_to_reduce_leftovers_.push_back("Recycle leftovers");
+    }
+  }
+
+  // remove duplicates (IMPORTANT for tests)
+  std::sort(suggested_strategies_to_reduce_leftovers_.begin(),
+            suggested_strategies_to_reduce_leftovers_.end());
+
+  suggested_strategies_to_reduce_leftovers_.erase(
+      std::unique(suggested_strategies_to_reduce_leftovers_.begin(),
+                  suggested_strategies_to_reduce_leftovers_.end()),
+      suggested_strategies_to_reduce_leftovers_.end());
+    
+    
+    /* for(const std::string& reason: most_common_leftover_reasons_) {
       // ensure most_common_leftover_reasons_ is not empty
       if(most_common_leftover_reasons_.empty()) {
         std::cout << "ERROR! most_common_leftover_reasons_ is empty\n";
@@ -162,8 +195,8 @@ public:
         suggested_strategies_to_reduce_leftovers_.\
           push_back("Cook small servings");
       }
-    }
-  }
+    } */
+  } // end of Strategies()
   
       // =========================================================
       //  Postcondition: prints std::unorderd_map<std::string, T>
