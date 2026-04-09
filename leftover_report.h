@@ -10,7 +10,8 @@
 #include "leftover_record.h"
 #include <vector> // for vector containers
 #include <unordered_map> // for frequency lookups
-#include <algorithm>
+#include <unordered_set>
+#include <algorithm> 
 #include <iostream> // remove
 
 // ================== TODO ===================
@@ -121,6 +122,13 @@ public:
       } // std::find() is used to avoid duplicates in container 
   } // end of CountHelper() 
 
+  enum class Reason {
+    Expired,
+    TastesBad,
+    TooMuchLeftovers,
+    Unknown
+  };
+
   // ====================================================================
   // Postcondition: suggests strategies to reduce left overs & puts them in suggested_strategies_to_reduce_leftovers_
   // ====================================================================
@@ -128,6 +136,42 @@ public:
     PrintVec(most_common_leftover_reasons_); // remove later
     
     suggested_strategies_to_reduce_leftovers_.clear();
+    // 1. Map strings to a set of enums once
+    std::unordered_set<Reason> active_reasons;
+    for (const std::string& reason_str : most_common_leftover_reasons_) {
+        if (reason_str == "Expired") {
+            active_reasons.insert(Reason::Expired);
+        } else if (reason_str == "Tastes bad") {
+            active_reasons.insert(Reason::TastesBad);
+        } else if (reason_str == "Too much left overs") {
+            active_reasons.insert(Reason::TooMuchLeftovers);
+        }
+    }
+
+    // 2. Extract state for cleaner logic
+    bool hasExpired = active_reasons.find(Reason::Expired) != active_reasons.end();
+    bool hasTastesBad = active_reasons.find(Reason::TastesBad) != active_reasons.end();
+    bool hasTooMuch = active_reasons.find(Reason::TooMuchLeftovers) != active_reasons.end();
+
+    // 3. Strategy Logic
+    if (hasExpired) {
+        suggested_strategies_to_reduce_leftovers_.push_back("Donate before expiration");
+    }
+
+    if (hasTastesBad || hasTooMuch) {
+        suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
+    }
+
+    if (hasTooMuch) {
+        suggested_strategies_to_reduce_leftovers_.push_back("Cook small servings");
+    }
+
+    if (!hasExpired) {
+        suggested_strategies_to_reduce_leftovers_.push_back("Recycle left overs");
+    }
+
+
+    /* suggested_strategies_to_reduce_leftovers_.clear();
     bool hasExpired = false;
     bool hasTastesBad = false;
     bool hasTooMuch = false;
@@ -135,7 +179,7 @@ public:
     for (const std::string& reason : most_common_leftover_reasons_) {
         if (reason == "Expired") hasExpired = true;
         else if (reason == "Tastes bad") hasTastesBad = true;
-        else if (reason == "Too much leftovers") hasTooMuch = true;
+        else if (reason == "Too much left overs") hasTooMuch = true;
     }
 
     if (hasExpired) {
@@ -152,7 +196,7 @@ public:
 
     if (!hasExpired) {
         suggested_strategies_to_reduce_leftovers_.push_back("Recycle left overs");
-    } 
+    } */ 
   } // end of Strategies()
   
       // =========================================================
