@@ -36,14 +36,14 @@ private:
   // private member objects 
   std::vector<std::string> most_common_leftover_names_;
   std::vector<std::string> most_costly_leftover_producing_meals_;
-  double total_cost_of_leftovers_;
+  double total_cost_of_leftovers_ = 0.0;
   std::vector<std::string> most_common_leftover_reasons_;
   std::vector<std::string> most_common_disposal_mechanisms_;
   std::vector<std::string> suggested_strategies_to_reduce_leftovers_;
 
 public:
   // initialize total_cost_of_leftovers_ to avoid segmentation fault
-  LeftoverReport() : total_cost_of_leftovers_(0.0) {}
+  LeftoverReport() = default;
   
   // ============= non-default constructor ==============
   LeftoverReport(const std::vector<LeftoverRecord>& record_list) : total_cost_of_leftovers_(0.0) { 
@@ -55,6 +55,14 @@ public:
   // Postcondition: fills up member objects
   // =======================================
   void FillObjects(const std::vector<LeftoverRecord>& records) {
+    // reset all member object containers & variable to avoid seg fault
+    most_common_leftover_names_.clear();
+    most_costly_leftover_producing_meals_.clear();
+    most_common_leftover_reasons_.clear();
+    most_common_disposal_mechanisms_.clear();
+    suggested_strategies_to_reduce_leftovers_.clear();
+    total_cost_of_leftovers_ = 0.0;
+    
     // variables and maps
     std::unordered_map<std::string, int> name_count_map;
     int name_max = 0;
@@ -100,6 +108,8 @@ public:
     void CountHelper(std::unordered_map<std::string, T>& map,\
         std::vector<std::string>& container, const std::string& key,\
         const T increment, T& max) {
+      // guard against empty string
+      if(key.empty()) return;
     // ------------------ when max is double ----------------
     if(std::is_same_v<T, double>) { // if T is a double type 
       map[key] += increment; // add cost to map[key]
