@@ -46,8 +46,7 @@ public:
   LeftoverReport() = default;
   
   // ============= non-default constructor ==============
-  LeftoverReport(const std::vector<LeftoverRecord>& record_list) : total_cost_of_leftovers_(0.0) { 
-    if(record_list.empty()) return; // guard
+  LeftoverReport(const std::vector<LeftoverRecord>& record_list) : total_cost_of_leftovers_(0.0) {  
     FillObjects(record_list);
     Strategies();
   } // end of non-default constructor
