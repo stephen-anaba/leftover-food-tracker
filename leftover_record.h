@@ -47,11 +47,11 @@ public:
     return (
       date_ == other.GetDate() &&
       meal_ == other.GetMeal() &&
-      name_ == other.GetName()// &&
-      // quantity_ == other.GetQuantity() &&
-      // reason_ == other.GetReason() &&
-      // disposal_mechanism_ == other.GetDisposalMechanism() &&
-      // cost_ == other.GetCost()
+      name_ == other.GetName() &&
+      quantity_ == other.GetQuantity() &&
+      reason_ == other.GetReason() &&
+      disposal_mechanism_ == other.GetDisposalMechanism() &&
+      cost_ == other.GetCost()
     );
   }
 };
