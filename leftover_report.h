@@ -11,7 +11,6 @@
 #include <vector> // for vector containers
 #include <unordered_map> // for frequency lookups
 #include <algorithm>
-#include <type_traits> // to determine int or double data type
 #include <iostream> // remove
 
 // ================== TODO ===================
@@ -119,36 +118,15 @@ public:
         container.push_back(key); // inserting key in it.
       } else if(map[key] == max && (std::find(container.begin(), container.end(), key) == container.end())) { // if value is same as max
         container.push_back(key); // then insert its key in container
-      } // std::find() is used to avoid duplicates in container
-
-    // ------------------ when max is double ----------------
-    /* if(std::is_same_v<T, double>) { // if T is a double type 
-      map[key] += increment; // add cost to map[key]
-      if(map[key] > max) {  // & map[key] > max 
-        max = map[key];    // then max becomes map[key]
-        if(!container.empty()) { // if container is empty
-          container.clear();    // then clear it
-        }
-        container.push_back(key); // insert key
-      } else if(map[key] == max && (std::find(container.begin(), container.end(), key) == container.end())) { 
-        container.push_back(key); // just put key in container
-      }
-    } else { // ------------------ when max is integer ---------------- 
-      map[key]++; // bfast:8, lunch:0, dinner:0 
-      if(map[key] > max) { //
-        max = map[key];   // 
-        if(!container.empty()) container.clear(); //
-        container.push_back(key); //
-      } else if(map[key] == max && (std::find(container.begin(), container.end(), key) == container.end())) { //
-        container.push_back(key); //
-      }
-    } */ // end of if-else statements
+      } // std::find() is used to avoid duplicates in container 
   } // end of CountHelper() 
 
   // ====================================================================
   // Postcondition: suggests strategies to reduce left overs & puts them in suggested_strategies_to_reduce_leftovers_
   // ====================================================================
   void Strategies() {
+    PrintVec(most_common_leftover_reasons_); // remove later
+    
     suggested_strategies_to_reduce_leftovers_.clear();
     bool hasExpired = false;
     bool hasTastesBad = false;
@@ -174,62 +152,7 @@ public:
 
     if (!hasExpired) {
         suggested_strategies_to_reduce_leftovers_.push_back("Recycle left overs");
-    }
-
-  /* for (const std::string& reason : most_common_leftover_reasons_) {
-    // rule 1
-    if (reason == "Expired") {
-      suggested_strategies_to_reduce_leftovers_.push_back("Donate before expiration");
-    }
-    // rule 2
-    if (reason == "Tastes bad") {
-      suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
-    }
-    // rule 3
-    if (reason == "Too much leftovers" || reason == "Too much left overs") {
-      suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
-      suggested_strategies_to_reduce_leftovers_.push_back("Cook small servings");
-    }
-    // rule 4 (applies only if NOT Expired)
-    if (reason != "Expired") {
-      suggested_strategies_to_reduce_leftovers_.push_back("Recycle left overs");
-    }
-  }
-  // remove duplicates
-  std::sort(suggested_strategies_to_reduce_leftovers_.begin(),
-            suggested_strategies_to_reduce_leftovers_.end());
-
-  suggested_strategies_to_reduce_leftovers_.erase(
-      std::unique(suggested_strategies_to_reduce_leftovers_.begin(),
-                  suggested_strategies_to_reduce_leftovers_.end()),
-      suggested_strategies_to_reduce_leftovers_.end()); */
-    
-    
-    /* for(const std::string& reason: most_common_leftover_reasons_) {
-      // ensure most_common_leftover_reasons_ is not empty
-      if(most_common_leftover_reasons_.empty()) {
-        std::cout << "ERROR! most_common_leftover_reasons_ is empty\n";
-        // exit(1);
-      }
-      
-      if(reason != "Expired" &&
-          std::find(suggested_strategies_to_reduce_leftovers_.begin(),
-            suggested_strategies_to_reduce_leftovers_.end(), 
-            reason) == suggested_strategies_to_reduce_leftovers_.end()) { 
-        suggested_strategies_to_reduce_leftovers_.\
-          push_back("Recycle left overs"); 
-      }
-      if(reason == "Expired") { // 1. reason == "Expired"
-        suggested_strategies_to_reduce_leftovers_.\
-          push_back("Donate before expiration");
-      } else if (reason == "Tastes bad") { // 2. reasn == "Tasted bad"
-        suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
-      } else if(reason == "Too much leftovers") { // 3. "2much leftovers"
-        suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
-        suggested_strategies_to_reduce_leftovers_.\
-          push_back("Cook small servings");
-      }
-    } */
+    } 
   } // end of Strategies()
   
       // =========================================================
