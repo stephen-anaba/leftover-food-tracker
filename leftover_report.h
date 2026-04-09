@@ -96,7 +96,8 @@ public:
   } // end of FillObjects
 
     // ===================================================
-    // Postcondition: helper function for FillObjects
+    // Postcondition: helper function for FillObjects that tracks
+    // key frequency & leaves only keys with max values in container
     // ===================================================
     // TODO: 1. Avoid tight coupling in CountHelper() by coding UpdateMap() &
     // TrackMax() so CountHelper only mutates result container
@@ -110,8 +111,18 @@ public:
         const T increment, T& max) {
       // guard against empty string
       if(key.empty()) return;
+      map[key] += increment; // increment count or cost in map
+      if(map[key] > max) { // if value > max
+        max = map[key]; // then set max to value
+        // ensure container is empty before ...
+        if(!container.empty()) container.clear();
+        container.push_back(key); // inserting key in it.
+      } else if(map[key] == max && (std::find(container.begin(), container.end(), key) == container.end())) { // if value is same as max
+        container.push_back(key); // then insert its key in container
+      } // std::find() is used to avoid duplicates in container
+
     // ------------------ when max is double ----------------
-    if(std::is_same_v<T, double>) { // if T is a double type 
+    /* if(std::is_same_v<T, double>) { // if T is a double type 
       map[key] += increment; // add cost to map[key]
       if(map[key] > max) {  // & map[key] > max 
         max = map[key];    // then max becomes map[key]
@@ -131,39 +142,59 @@ public:
       } else if(map[key] == max && (std::find(container.begin(), container.end(), key) == container.end())) { //
         container.push_back(key); //
       }
-    } // end of if-else statements
+    } */ // end of if-else statements
   } // end of CountHelper() 
 
   // ====================================================================
-  // Postcondition: determines suggested_strategies_to_reduce_leftovers_
+  // Postcondition: suggests strategies to reduce left overs & puts them in suggested_strategies_to_reduce_leftovers_
   // ====================================================================
   void Strategies() {
     suggested_strategies_to_reduce_leftovers_.clear();
+    bool hasExpired = false;
+    bool hasTastesBad = false;
+    bool hasTooMuch = false;
 
-  for (const std::string& reason : most_common_leftover_reasons_) {
+    for (const std::string& reason : most_common_leftover_reasons_) {
+        if (reason == "Expired") hasExpired = true;
+        else if (reason == "Tastes bad") hasTastesBad = true;
+        else if (reason == "Too much leftovers") hasTooMuch = true;
+    }
 
+    if (hasExpired) {
+        suggested_strategies_to_reduce_leftovers_.push_back("Donate before expiration");
+    }
+
+    if (hasTastesBad || hasTooMuch) {
+        suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
+    }
+
+    if (hasTooMuch) {
+        suggested_strategies_to_reduce_leftovers_.push_back("Cook small servings");
+    }
+
+    if (!hasExpired) {
+        suggested_strategies_to_reduce_leftovers_.push_back("Recycle left overs");
+    }
+
+  /* for (const std::string& reason : most_common_leftover_reasons_) {
     // rule 1
     if (reason == "Expired") {
       suggested_strategies_to_reduce_leftovers_.push_back("Donate before expiration");
     }
-
     // rule 2
     if (reason == "Tastes bad") {
       suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
     }
-
     // rule 3
     if (reason == "Too much leftovers" || reason == "Too much left overs") {
       suggested_strategies_to_reduce_leftovers_.push_back("Buy less food");
       suggested_strategies_to_reduce_leftovers_.push_back("Cook small servings");
     }
-
     // rule 4 (applies only if NOT Expired)
     if (reason != "Expired") {
       suggested_strategies_to_reduce_leftovers_.push_back("Recycle left overs");
     }
   }
-
   // remove duplicates
   std::sort(suggested_strategies_to_reduce_leftovers_.begin(),
             suggested_strategies_to_reduce_leftovers_.end());
@@ -171,7 +202,7 @@ public:
   suggested_strategies_to_reduce_leftovers_.erase(
       std::unique(suggested_strategies_to_reduce_leftovers_.begin(),
                   suggested_strategies_to_reduce_leftovers_.end()),
-      suggested_strategies_to_reduce_leftovers_.end());
+      suggested_strategies_to_reduce_leftovers_.end()); */
     
     
     /* for(const std::string& reason: most_common_leftover_reasons_) {
