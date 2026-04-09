@@ -48,7 +48,7 @@ public:
   // ============= non-default constructor ==============
   LeftoverReport(const std::vector<LeftoverRecord>& record_list) : total_cost_of_leftovers_(0.0) { 
     FillObjects(record_list);
-    Strategies(); 
+    Strategies();
   } // end of non-default constructor
 
   // =======================================
@@ -122,7 +122,8 @@ public:
       } // std::find() is used to avoid duplicates in container 
   } // end of CountHelper() 
 
-  enum class Reason {
+
+    enum class Reason {
     Expired,
     TastesBad,
     TooMuchLeftovers,
@@ -134,8 +135,8 @@ public:
   // ====================================================================
   void Strategies() {
     PrintVec(most_common_leftover_reasons_); // remove later
-    
-    suggested_strategies_to_reduce_leftovers_.clear();
+    if(most_common_leftover_reasons_.empty()) return; // guard
+    suggested_strategies_to_reduce_leftovers_.clear(); // clear
     // 1. Map strings to a set of enums once
     std::unordered_set<Reason> active_reasons;
     for (const std::string& reason_str : most_common_leftover_reasons_) {
