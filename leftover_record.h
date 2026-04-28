@@ -15,15 +15,14 @@ class LeftoverRecord {
   std::string date_;
   std::string meal_;
   std::string name_;
-  double quantity_; 
+  double quantity_;
   std::string reason_;
   std::string disposal_mechanism_;
   double cost_;
 
-  public:
+ public:
   // default constructor
   LeftoverRecord() : quantity_(0.0), cost_(0.0) {}
-
 
   // setters
   void SetDate(const std::string& date) { date_ = date; }
@@ -36,7 +35,6 @@ class LeftoverRecord {
   }
   void SetCost(double cost) { cost_ = cost; }
 
-
   // getters
   std::string GetDate() const { return date_; }
   std::string GetMeal() const { return meal_; }
@@ -45,13 +43,11 @@ class LeftoverRecord {
   std::string GetReason() const { return reason_; }
   std::string GetDisposalMechanism() const { return disposal_mechanism_; }
   double GetCost() const { return cost_; }
-  
+
   // overload function for `== operator`
   bool operator==(const LeftoverRecord& other) const {
-    return (date_ == other.GetDate() &&
-            meal_ == other.GetMeal() &&
-            name_ == other.GetName() &&
-            quantity_ == other.GetQuantity() &&
+    return (date_ == other.GetDate() && meal_ == other.GetMeal() &&
+            name_ == other.GetName() && quantity_ == other.GetQuantity() &&
             reason_ == other.GetReason() &&
             disposal_mechanism_ == other.GetDisposalMechanism() &&
             cost_ == other.GetCost());

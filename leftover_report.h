@@ -8,10 +8,10 @@
 // 3takita
 
 #include <algorithm>
-#include <iostream>      // remove
-#include <unordered_map> // for frequency lookups
+#include <iostream>       // remove
+#include <unordered_map>  // for frequency lookups
 #include <unordered_set>
-#include <vector>        // for vector containers
+#include <vector>  // for vector containers
 
 #include "leftover_record.h"
 
@@ -32,9 +32,9 @@ class LeftoverReport {
   // ============= non-default constructor ==============
   LeftoverReport(const std::vector<LeftoverRecord>& record_list)
       : total_cost_of_leftovers_(0.0) {
-    FillObjects(record_list); // fill member objects
-    Strategies();             // generate strategies & fill strategy container
-  }                           // end of non-default constructor
+    FillObjects(record_list);  // fill member objects
+    Strategies();              // generate strategies & fill strategy container
+  }  // end of non-default constructor
 
   // =======================================
   // Postcondition: fills up member objects
@@ -77,8 +77,8 @@ class LeftoverReport {
       }
       CountHelper(meal_cost_map, most_costly_leftover_producing_meals_,
                   record.GetMeal(), record.GetCost(), meal_max);
-    } // end of for-loop
-  }   // end of FillObjects
+    }  // end of for-loop
+  }  // end of FillObjects
 
   // ===================================================
   // Postcondition: helper function for FillObjects that tracks
@@ -90,18 +90,18 @@ class LeftoverReport {
                    const T increment, T& max) {
     // guard against empty string
     if (key.empty()) return;
-    map[key] += increment; // increment count or cost in map
-    if (map[key] > max) {  // if value > max
-      max = map[key];      // then set max to value
+    map[key] += increment;  // increment count or cost in map
+    if (map[key] > max) {   // if value > max
+      max = map[key];       // then set max to value
       // ensure container is empty before ...
       if (!container.empty()) container.clear();
-      container.push_back(key);     // inserting key in it.
+      container.push_back(key);  // inserting key in it.
     } else if (map[key] == max &&
                (std::find(container.begin(), container.end(), key) ==
-                container.end())) { // if value is same as max
-      container.push_back(key);     // then insert its key in container
-    } // std::find() is used to avoid duplicates in container
-  }   // end of CountHelper()
+                container.end())) {  // if value is same as max
+      container.push_back(key);      // then insert its key in container
+    }  // std::find() is used to avoid duplicates in container
+  }  // end of CountHelper()
 
   // ============ Helper enum for Strategies() ===========
   enum class Reason { Expired, TastesBad, TooMuchLeftovers, Unknown };
@@ -111,9 +111,9 @@ class LeftoverReport {
   // suggested_strategies_to_reduce_leftovers_
   // ====================================================================
   void Strategies() {
-    PrintVec(most_common_leftover_reasons_);           // remove later
-    if (most_common_leftover_reasons_.empty()) return; // guard
-    suggested_strategies_to_reduce_leftovers_.clear(); // clear
+    PrintVec(most_common_leftover_reasons_);            // remove later
+    if (most_common_leftover_reasons_.empty()) return;  // guard
+    suggested_strategies_to_reduce_leftovers_.clear();  // clear
     // 1. Map strings to a set of enums once
     std::unordered_set<Reason> active_reasons;
     for (const std::string& reason_str : most_common_leftover_reasons_) {
@@ -152,7 +152,7 @@ class LeftoverReport {
     if (!hasExpired) {
       suggested_strategies_to_reduce_leftovers_.push_back("Recycle left overs");
     }
-  } // end of Strategies()
+  }  // end of Strategies()
 
   // =========================================================
   //  Postcondition: prints std::unorderd_map<std::string, T>
