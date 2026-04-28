@@ -34,7 +34,7 @@ class LeftoverReport {
       : total_cost_of_leftovers_(0.0) {
     FillObjects(record_list);  // fill member objects
     Strategies();              // generate strategies & fill strategy container
-  }  // end of non-default constructor
+  }                            // end of non-default constructor
 
   // =======================================
   // Postcondition: fills up member objects
@@ -78,7 +78,7 @@ class LeftoverReport {
       CountHelper(meal_cost_map, most_costly_leftover_producing_meals_,
                   record.GetMeal(), record.GetCost(), meal_max);
     }  // end of for-loop
-  }  // end of FillObjects
+  }    // end of FillObjects
 
   // ===================================================
   // Postcondition: helper function for FillObjects that tracks
@@ -101,7 +101,7 @@ class LeftoverReport {
                 container.end())) {  // if value is same as max
       container.push_back(key);      // then insert its key in container
     }  // std::find() is used to avoid duplicates in container
-  }  // end of CountHelper()
+  }    // end of CountHelper()
 
   // ============ Helper enum for Strategies() ===========
   enum class Reason { Expired, TastesBad, TooMuchLeftovers, Unknown };
