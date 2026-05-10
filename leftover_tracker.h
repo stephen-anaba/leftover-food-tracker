@@ -21,82 +21,36 @@ class LeftoverTracker {
 
  public:
   // default constructor
-  LeftoverTracker() = default;
+  LeftoverTracker();  // = default;
   // non-default constructor
-  LeftoverTracker(const std::vector<LeftoverRecord>& record_list)
-      : record_list_(record_list) {}
+  LeftoverTracker(const std::vector<LeftoverRecord>& record_list);
 
   // =================================================================
   // Precondition: User has created a leftover record
   // Postcondition: Adds new record_list_ & return true if successful,
   // else returns false. Avoids duplicate records
   // ==================================================================
-  bool AddRecord(const LeftoverRecord& new_record) {  // DONE
-    // input validation
-    if (new_record.GetDate().empty() || new_record.GetMeal().empty() ||
-        new_record.GetName().empty()) {
-      std::cout << "ERROR: Incomplete record\n";
-      return false;
-    }
-
-    for (const LeftoverRecord& existing_record : record_list_) {
-      if (existing_record == new_record) {
-        // remove debug print statements
-        /*std::cout << "Comparing records:\n";
-        std::cout << "Existing: "
-                  << existing_record.GetDate() << ", "
-                  << existing_record.GetMeal() << ", "
-                  << existing_record.GetName() << "\n";
-
-        std::cout << "New: ["
-                  << new_record.GetDate() << ", "
-                  << new_record.GetMeal() << ", "
-                  << new_record.GetName() << "]\n"; */
-
-        // if(existing_record == new_record) {
-        //  std::cout << "Duplicate detected\n";
-        return false;
-        //}
-      }
-    }
-    record_list_.push_back(new_record);
-    return true;
-  }  // end of AddRecord()
+  bool AddRecord(const LeftoverRecord& new_record);
 
   // ===================================================================
   // Precondition: User has created leftover record(s)
   // Postcondition: Delete `record` from record_list_ & return true, else
   // returns false
   // ==================================================================
-  bool DeleteRecord(const LeftoverRecord& record) {  // DONE
-    // find the iterator 'it' of  matching record.
-    auto it = std::find(record_list_.begin(), record_list_.end(), record);
-    // if the target record does not exists, just return false
-    if (it == record_list_.end()) {
-      return false;
-    }
-    // but if it exists, erase it
-    record_list_.erase(it);
-    return true;  // return true
-  }
+  bool DeleteRecord(const LeftoverRecord& record);
 
   // ====================================================================
   // Precondition: User has entered leftover record(s)
   // Postcondition: Provides external classes or functions the means to access
   // list of leftover record from memory
   // ====================================================================
-  std::vector<LeftoverRecord> GetRecords() const {  // DONE
-    return record_list_;
-  }
+  std::vector<LeftoverRecord> GetRecords() const;
 
   // ====================================================================
   // Precondition: User has created leftover record(s)
   // Postcondition: Generates and returns the leftover report
   // ====================================================================
-  LeftoverReport GenerateLeftoverReport() const {
-    // instantiate a LeftoverReport object using record_list_
-    return LeftoverReport(record_list_);
-  }
+  LeftoverReport GenerateLeftoverReport() const;
 };
 
 #endif

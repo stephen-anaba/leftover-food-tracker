@@ -22,36 +22,36 @@ class LeftoverRecord {
 
  public:
   // default constructor
-  LeftoverRecord() : quantity_(0.0), cost_(0.0) {}
+  LeftoverRecord();  // : quantity_(0.0), cost_(0.0) {}
 
   // setters
-  void SetDate(const std::string& date) { date_ = date; }
-  void SetMeal(const std::string& meal) { meal_ = meal; }
-  void SetName(const std::string& name) { name_ = name; }
-  void SetQuantity(double quantity) { quantity_ = quantity; }
-  void SetReason(const std::string& reason) { reason_ = reason; }
-  void SetDisposalMechanism(const std::string& disposal_mechanism) {
+  void SetDate(const std::string& date);      // { date_ = date; }
+  void SetMeal(const std::string& meal);      // { meal_ = meal; }
+  void SetName(const std::string& name);      // { name_ = name; }
+  void SetQuantity(double quantity);          // { quantity_ = quantity; }
+  void SetReason(const std::string& reason);  // { reason_ = reason; }
+  void SetDisposalMechanism(const std::string& disposal_mechanism); /* {
     disposal_mechanism_ = disposal_mechanism;
-  }
-  void SetCost(double cost) { cost_ = cost; }
+  }*/
+  void SetCost(double cost);  // { cost_ = cost; }
 
   // getters
-  std::string GetDate() const { return date_; }
-  std::string GetMeal() const { return meal_; }
-  std::string GetName() const { return name_; }
-  double GetQuantity() const { return quantity_; }
-  std::string GetReason() const { return reason_; }
-  std::string GetDisposalMechanism() const { return disposal_mechanism_; }
-  double GetCost() const { return cost_; }
+  std::string GetDate() const;               // { return date_; }
+  std::string GetMeal() const;               // { return meal_; }
+  std::string GetName() const;               // { return name_; }
+  double GetQuantity() const;                // { return quantity_; }
+  std::string GetReason() const;             // { return reason_; }
+  std::string GetDisposalMechanism() const;  // { return disposal_mechanism_; }
+  double GetCost() const;                    // { return cost_; }
 
   // overload function for `== operator`
-  bool operator==(const LeftoverRecord& other) const {
+  bool operator==(const LeftoverRecord& other) const; /* {
     return (date_ == other.GetDate() && meal_ == other.GetMeal() &&
             name_ == other.GetName() && quantity_ == other.GetQuantity() &&
             reason_ == other.GetReason() &&
             disposal_mechanism_ == other.GetDisposalMechanism() &&
             cost_ == other.GetCost());
-  }
+  }*/
 };
 
 #endif
