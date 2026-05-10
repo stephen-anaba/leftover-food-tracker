@@ -57,8 +57,8 @@ class LeftoverReport {
                (std::find(container.begin(), container.end(), key) ==
                 container.end())) {  // if value is same as max
       container.push_back(key);      // then insert its key in container
-    } // std::find() is used to avoid duplicates in container
-  }   // end of CountHelper()
+    }  // std::find() is used to avoid duplicates in container
+  }    // end of CountHelper()
 
   // ============ Helper enum for Strategies() ===========
   enum class Reason { Expired, TastesBad, TooMuchLeftovers, Unknown };
